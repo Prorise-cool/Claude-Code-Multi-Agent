@@ -34,7 +34,7 @@ jobs:
           version: "latest"
 
       - name: 缓存 uv 依赖
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cache/uv
           key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
@@ -77,7 +77,7 @@ jobs:
           version: "latest"
 
       - name: 缓存 uv 依赖
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cache/uv
           key: ${{ runner.os }}-py${{ matrix.python-version }}-uv-${{ hashFiles('**/pyproject.toml') }}
