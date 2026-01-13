@@ -1,141 +1,58 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep:*)",
-      "Bash(ls:*)",
-      "Bash(source:*)",
-      "Bash(find:*)",
-      "Bash(mv:*)",
-      "Bash(mkdir:*)",
-      "Bash(tree:*)",
-      "Bash(ruff:*)",
-      "Bash(touch:*)",
-      "Bash(cat:*)",
-      "Bash(ruff check:*)",
-      "Bash(pytest:*)",
-      "Bash(python:*)",
-      "Bash(python -m pytest:*)",
-      "Bash(python3 -m pytest:*)",
-      "Bash(node:*)",
-      "Bash(git:*)",
-      "Bash(echo:*)",
-      "Bash(date:*)",
-      "WebFetch(domain:docs.anthropic.com)",
       "mcp__mcp-feedback-enhanced__interactive_feedback",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__Exa_AI_______web_search_exa",
+      "Skill(frontend-specialist)",
+      "Skill(superpowers:brainstorming)",
+      "Skill(backend-specialist)",
+      "Bash(python:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell:*)",
+      "Bash(dir:*)",
+      "mcp__filesystem__list_allowed_directories",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__create_directory",
+      "mcp__Shrimp_Task_Manager__process_thought",
+      "mcp__Sequential_Thinking__sequentialthinking",
+      "mcp__memory__create_entities",
+      "mcp__memory__add_observations",
+      "mcp__magic__21st_magic_component_inspiration",
+      "mcp__magic__21st_magic_component_builder",
+      "mcp__memory__search_nodes",
+      "Bash(xcopy:*)",
+      "Bash(copy \"C:\\\\Users\\\\Prorise\\\\Desktop\\\\Claude-Code-Multi-Agent\\\\Claude-Code-Multi-Agent\\\\.claude\\\\hooks\\\\core\\\\ollama_client.py\" \"C:\\\\Users\\\\Prorise\\\\Desktop\\\\Claude-Code-Multi-Agent\\\\Claude-Code-Multi-Agent\\\\.claude\\\\hooks\\\\backup\\\\ollama_client.py\")",
+      "Skill(architecture-specialist)",
+      "Skill(documentation-specialist)",
+      "Bash(node create-ppt.js)",
+      "Bash(git add:*)",
+      "mcp__acemcp__search_context",
+      "Skill(data-specialist)",
+      "mcp__filesystem__read_text_file",
+      "Bash(python3:*)",
+      "Skill(ui-ux-pro-max)"
     ],
-    "deny": []
+    "deny": [],
+    "ask": []
   },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Edit|MultiEdit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js handle-file-change",
-            "timeout": 30000
-          }
-        ]
-      },
-      {
-        "matcher": "Task",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js update-stats",
-            "timeout": 15000
-          }
-        ]
-      },
-      {
-        "matcher": "TodoWrite",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js update-stats",
-            "timeout": 10000
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js handle-task-complete",
-            "timeout": 45000
-          },
-          {
-            "type": "command",
-            "command": "git add . && git commit -m \"Auto-commit: Agent task completed - $(date)\" || true",
-            "timeout": 20000
-          }
-        ]
-      },
-      {
-        "matcher": "spec-*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/agent-selector.js trigger-next-phase",
-            "timeout": 30000
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js handle-notification",
-            "timeout": 10000
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js update-stats",
-            "timeout": 15000
-          },
-          {
-            "type": "command",
-            "command": "echo \"$(date): Claude Code session completed\" >> .claude/session.log",
-            "timeout": 5000
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Task",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node agents/todo-hook-manager.js validate-task-prerequisites",
-            "timeout": 10000
-          }
-        ]
-      },
-      {
-        "matcher": "Edit|MultiEdit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 -c \"import json, sys; data=json.load(sys.stdin); path=data.get('tool_input',{}).get('file_path',''); sys.exit(2 if any(p in path for p in ['.env', 'package-lock.json', '.git/', 'node_modules/']) else 0)\"",
-            "timeout": 5000
-          }
-        ]
-      }
-    ]
-  }
+  "enabledMcpjsonServers": [
+    "Context7",
+    "acemcp",
+    "Exa AI (搜索)",
+    "mcp-feedback-enhanced",
+    "Sequential Thinking",
+    "Shrimp Task Manager",
+    "everything-search",
+    "github",
+    "filesystem",
+    "magic",
+    "playwright",
+    "docker",
+    "mysql",
+    "magic-ui",
+    "time-mcp",
+    "redis-mcp",
+    "chrome-devtools"
+  ]
 }

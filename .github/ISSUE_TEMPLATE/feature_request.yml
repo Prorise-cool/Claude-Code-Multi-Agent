@@ -1,0 +1,100 @@
+name: 功能请求
+description: 建议新功能或增强
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您建议新功能！
+        请尽可能提供详细信息，以帮助我们理解您的请求。
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 先决条件
+      description: 请在提交前确认以下内容
+      options:
+        - label: 我已搜索现有问题和讨论以确保此功能未被请求
+          required: true
+        - label: 我已阅读文档，此功能不存在
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 功能类别
+      description: 此功能属于哪个类别？
+      options:
+        - 新技能
+        - 新命令
+        - Hook 增强
+        - Ollama 集成
+        - 文档
+        - 开发者体验
+        - 性能
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题陈述
+      description: 此功能解决了什么问题？用例是什么？
+      placeholder: |
+        我总是感到沮丧，当...
+        目前，我必须手动...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 建议的解决方案
+      description: 描述您想要的解决方案
+      placeholder: |
+        我希望能够...
+        该功能应该通过...工作
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 考虑的替代方案
+      description: 描述您考虑过的任何替代解决方案或功能
+      placeholder: |
+        我还考虑了...
+        另一种方法可能是...
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 优先级
+      description: 此功能对您有多重要？
+      options:
+        - 有更好
+        - 重要
+        - 对我的工作流程至关重要
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 贡献
+      description: 您是否愿意为此功能做出贡献？
+      options:
+        - label: 我愿意为此功能提交 PR
+        - label: 我可以帮助测试
+        - label: 我可以帮助编写文档
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 附加上下文
+      description: 添加有关功能请求的任何其他上下文、 mockup 或示例
+      placeholder: 任何其他信息、截图或示例...

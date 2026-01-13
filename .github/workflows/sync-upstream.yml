@@ -1,0 +1,155 @@
+# 同步上游 - 允许 Fork 用户与上游仓库同步
+name: 同步上游
+
+on:
+  schedule:
+    # 每周日 UTC 00:00 运行
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+    inputs:
+      sync_branch:
+        description: '要同步的分支（默认：master）'
+        required: false
+        default: 'master'
+        type: string
+      create_pr:
+        description: '创建 PR 而不是直接合并'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    name: 与上游同步
+    runs-on: ubuntu-latest
+    # 仅在 Fork 上运行
+    if: github.repository != 'Prorise-cool/Claude-Code-Multi-Agent'
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 配置 Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 添加上游远程
+        run: |
+          git remote add upstream https://github.com/Prorise-cool/Claude-Code-Multi-Agent.git || true
+          git fetch upstream
+
+      - name: 获取同步分支
+        id: branch
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "branch=${{ github.event.inputs.sync_branch }}" >> $GITHUB_OUTPUT
+          else
+            echo "branch=master" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 检查上游更改
+        id: check
+        run: |
+          BRANCH="${{ steps.branch.outputs.branch }}"
+          LOCAL=$(git rev-parse HEAD)
+          UPSTREAM=$(git rev-parse upstream/$BRANCH)
+
+          if [ "$LOCAL" == "$UPSTREAM" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "没有需要同步的更改"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "检测到更改，将进行同步"
+
+            # 获取更改的文件列表
+            CHANGED_FILES=$(git diff --name-only HEAD upstream/$BRANCH | head -20)
+            echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 创建同步分支
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          BRANCH="${{ steps.branch.outputs.branch }}"
+          SYNC_BRANCH="sync-upstream-$(date +%Y%m%d)"
+
+          git checkout -b $SYNC_BRANCH
+          git merge upstream/$BRANCH --no-edit || {
+            echo "检测到合并冲突"
+            git merge --abort
+            exit 1
+          }
+
+          git push origin $SYNC_BRANCH
+
+          echo "SYNC_BRANCH=$SYNC_BRANCH" >> $GITHUB_ENV
+
+      - name: 创建拉取请求
+        if: steps.check.outputs.has_changes == 'true' && (github.event.inputs.create_pr == 'true' || github.event_name == 'schedule')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = '${{ steps.branch.outputs.branch }}';
+            const syncBranch = process.env.SYNC_BRANCH;
+            const changedFiles = `${{ steps.check.outputs.changed_files }}`;
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🔄 与上游同步 (${new Date().toISOString().split('T')[0]})`,
+              head: syncBranch,
+              base: branch,
+              body: `## 上游同步
+
+            此 PR 将您的 Fork 与上游仓库同步。
+
+            ### 更改的文件
+            \`\`\`
+            ${changedFiles}
+            \`\`\`
+
+            ### 需要做什么
+            1. 审查更改
+            2. 解决任何冲突（如果存在）
+            3. 准备就绪时合并
+
+            ---
+            *此 PR 由 sync-upstream 工作流自动创建。*
+            `
+            });
+
+            // 添加标签
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              labels: ['upstream-sync', 'automated']
+            });
+
+            console.log(`已创建 PR #${pr.number}`);
+
+      - name: 直接合并（如果请求）
+        if: steps.check.outputs.has_changes == 'true' && github.event.inputs.create_pr == 'false'
+        run: |
+          BRANCH="${{ steps.branch.outputs.branch }}"
+          git checkout $BRANCH
+          git merge upstream/$BRANCH --no-edit
+          git push origin $BRANCH
+
+  notify-no-changes:
+    name: 通知无更改
+    runs-on: ubuntu-latest
+    needs: sync
+    if: always() && needs.sync.result == 'success'
+    steps:
+      - name: 记录状态
+        run: echo "同步检查成功完成"

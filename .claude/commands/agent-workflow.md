@@ -1,142 +1,136 @@
 ---
-description: "Automated multi-agent development workflow with quality gates from idea to production code"
+description: "从想法到生产代码的自动化多代理开发工作流，带质量门控"
 allowed-tools: ["Task", "Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "TodoWrite"]
 ---
 
-# Agent Workflow - Automated Development Pipeline
+# Agent Workflow - 自动化开发流水线
 
-Execute complete development workflow using intelligent sub-agent chaining with
-quality gates.
+使用智能子代理链和质量门控执行完整的开发工作流。
 
-## Usage
+## 用法
 
 ```bash
-/agent-workflow <FEATURE_DESCRIPTION>
+/agent-workflow <功能描述>
 ```
 
-## Context
+## 上下文
 
-- Feature to develop: $ARGUMENTS
-- Automated multi-agent workflow with quality gates
-- Sub-agents work in independent contexts with smart chaining
+- 要开发的功能：$ARGUMENTS
+- 带质量门控的自动化多代理工作流
+- 子代理在独立上下文中工作，具有智能链式连接
 
-## Your Role
+## 你的角色
 
-You are the Workflow Orchestrator managing an automated development pipeline
-using Claude Code Sub-Agents. You coordinate a quality-gated workflow that
-ensures 95%+ code quality through intelligent looping.
+你是工作流协调器，管理使用 Claude Code 子代理的自动化开发流水线。你协调一个带质量门控的工作流，通过智能循环确保 95%+ 的代码质量。
 
-## Sub-Agent Chain Process
+## 子代理链流程
 
-Execute the following chain using Claude Code's sub-agent syntax:
+使用 Claude Code 的子代理语法执行以下链：
 
 ```
-First use the spec-analyst sub agent to generate complete specifications for [$ARGUMENTS], then use the spec-architect sub agent to design system architecture, then use the spec-developer sub agent to implement code based on specifications, then use the spec-validator sub agent to evaluate code quality with scoring, then if score ≥95% use the spec-tester sub agent to generate comprehensive test suite, otherwise first use the spec-analyst sub agent again to improve specifications based on validation feedback and repeat the chain.
+首先使用 spec-analyst 子代理为 [$ARGUMENTS] 生成完整规范，然后使用 spec-architect 子代理设计系统架构，然后使用 spec-developer 子代理基于规范实施代码，然后使用 spec-validator 子代理评估代码质量并评分，然后如果分数 ≥95% 使用 spec-tester 子代理生成全面测试套件，否则首先再次使用 spec-analyst 子代理基于验证反馈改进规范并重复该链。
 ```
 
-## Workflow Logic
+## 工作流逻辑
 
-### Quality Gate Mechanism
+### 质量门控机制
 
-- **Validation Score ≥95%**: Proceed to spec-tester sub agent
-- **Validation Score <95%**: Loop back to spec-analyst sub agent with feedback
-- **Maximum 3 iterations**: Prevent infinite loops
+- **验证分数 ≥95%**：继续到 spec-tester 子代理
+- **验证分数 <95%**：循环回到 spec-analyst 子代理并附带反馈
+- **最多 3 次迭代**：防止无限循环
 
-### Chain Execution Steps
+### 链执行步骤
 
-1. **spec-analyst sub agent**: Generate requirements.md, user-stories.md,
-   acceptance-criteria.md
-2. **spec-architect sub agent**: Create architecture.md, api-spec.md,
-   tech-stack.md
-3. **spec-developer sub agent**: Implement code based on specifications
-4. **spec-validator sub agent**: Multi-dimensional quality scoring (0-100%)
-5. **Quality Gate Decision**:
-   - If ≥95%: Continue to spec-tester sub agent
-   - If <95%: Return to spec-analyst sub agent with specific feedback
-6. **spec-tester sub agent**: Generate comprehensive test suite (final step)
+1. **spec-analyst 子代理**：生成 requirements.md、user-stories.md、acceptance-criteria.md
+2. **spec-architect 子代理**：创建 architecture.md、api-spec.md、tech-stack.md
+3. **spec-developer 子代理**：基于规范实施代码
+4. **spec-validator 子代理**：多维质量评分（0-100%）
+5. **质量门控决策**：
+   - 如果 ≥95%：继续到 spec-tester 子代理
+   - 如果 <95%：返回 spec-analyst 子代理并附带具体反馈
+6. **spec-tester 子代理**：生成全面测试套件（最后一步）
 
-## Expected Iterations
+## 预期迭代
 
-- **Round 1**: Initial implementation (typically 80-90% quality)
-- **Round 2**: Refined implementation addressing feedback (typically 90-95%)
-- **Round 3**: Final optimization if needed (95%+ target)
+- **第 1 轮**：初始实施（通常 80-90% 质量）
+- **第 2 轮**：解决反馈的改进实施（通常 90-95%）
+- **第 3 轮**：如需要，最终优化（目标 95%+）
 
-## Output Format
+## 输出格式
 
-1. **Workflow Initiation** - Start sub-agent chain with feature description
-2. **Progress Tracking** - Monitor each sub-agent completion
-3. **Quality Gate Decisions** - Report review scores and next actions
-4. **Completion Summary** - Final artifacts and quality metrics
+1. **工作流启动** - 使用功能描述启动子代理链
+2. **进度跟踪** - 监控每个子代理的完成情况
+3. **质量门控决策** - 报告审查分数和下一步操作
+4. **完成摘要** - 最终工件和质量指标
 
-## Key Benefits
+## 关键优势
 
-- **Automated Quality Control**: 95% threshold ensures high standards
-- **Intelligent Feedback Loops**: Review feedback guides spec improvements
-- **Independent Contexts**: Each sub-agent works in clean environment
-- **One-Command Execution**: Single command triggers entire workflow
+- **自动化质量控制**：95% 阈值确保高标准
+- **智能反馈循环**：审查反馈指导规范改进
+- **独立上下文**：每个子代理在干净环境中工作
+- **一键执行**：单个命令触发整个工作流
 
 ---
 
-## Execute Workflow
+## 执行工作流
 
-**Feature Description**: $ARGUMENTS
+**功能描述**：$ARGUMENTS
 
-Starting automated development workflow with quality gates...
+正在启动带质量门控的自动化开发工作流...
 
-### 🎯 Phase 1: Specification Generation
+### 🎯 阶段 1：规范生成
 
-First use the **spec-analyst** sub agent to analyze requirements and generate:
+首先使用 **spec-analyst** 子代理分析需求并生成：
 
-- Detailed requirements documentation
-- User stories with acceptance criteria
-- Technical constraints and assumptions
-- Success metrics and validation criteria
+- 详细的需求文档
+- 带验收标准的用户故事
+- 技术约束和假设
+- 成功指标和验证标准
 
-### 🏗️ Phase 2: Architecture Design
+### 🏗️ 阶段 2：架构设计
 
-Then use the **spec-architect** sub agent to create:
+然后使用 **spec-architect** 子代理创建：
 
-- System architecture design
-- API specifications and contracts
-- Technology stack decisions
-- Database schema and data flow
-- Security and performance considerations
+- 系统架构设计
+- API 规范和合约
+- 技术栈决策
+- 数据库模式和数据流
+- 安全和性能考虑
 
-### 💻 Phase 3: Implementation
+### 💻 阶段 3：实施
 
-Then use the **spec-developer** sub agent to:
+然后使用 **spec-developer** 子代理：
 
-- Implement core functionality based on specifications
-- Follow best practices and coding standards
-- Create modular, maintainable code structure
-- Include basic error handling and logging
+- 基于规范实施核心功能
+- 遵循最佳实践和编码标准
+- 创建模块化、可维护的代码结构
+- 包含基本错误处理和日志记录
 
-### ✅ Phase 4: Quality Validation
+### ✅ 阶段 4：质量验证
 
-Then use the **spec-validator** sub agent to evaluate:
+然后使用 **spec-validator** 子代理评估：
 
-- Code quality metrics (readability, maintainability)
-- Architecture compliance and best practices
-- Security vulnerabilities and performance issues
-- Documentation completeness and accuracy
-- **Provide quality score (0-100%)**
+- 代码质量指标（可读性、可维护性）
+- 架构合规性和最佳实践
+- 安全漏洞和性能问题
+- 文档完整性和准确性
+- **提供质量分数（0-100%）**
 
-### 🔄 Quality Gate Decision
+### 🔄 质量门控决策
 
-**If validation score ≥95%**: Proceed to testing phase **If validation score
-<95%**: Loop back to spec-analyst with feedback for improvement
+**如果验证分数 ≥95%**：进入测试阶段 **如果验证分数 <95%**：循环回到 spec-analyst 并附带改进反馈
 
-### 🧪 Phase 5: Test Generation (Final)
+### 🧪 阶段 5：测试生成（最后）
 
-Finally use the **spec-tester** sub agent to create:
+最后使用 **spec-tester** 子代理创建：
 
-- Comprehensive unit test suite
-- Integration tests for key workflows
-- End-to-end test scenarios
-- Performance and load testing scripts
-- Test coverage reports and quality metrics
+- 全面的单元测试套件
+- 关键工作流的集成测试
+- 端到端测试场景
+- 性能和负载测试脚本
+- 测试覆盖率报告和质量指标
 
-## Expected Output Structure
+## 预期输出结构
 
 ```
 project/
@@ -158,5 +152,4 @@ project/
 └── README.md
 ```
 
-**Begin execution now with the provided feature description and report progress
-after each sub-agent completion.**
+**现在开始使用提供的功能描述执行，并在每个子代理完成后报告进度。**

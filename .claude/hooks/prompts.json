@@ -1,0 +1,103 @@
+{
+  "session_start": {
+    "skills_hint_header": "可用 Skills（使用 /skill-name 调用）:",
+    "skills_hint_item": "  /{name}: {desc}",
+    "skills_summary": "\n共有 {count} 个可用 Skills。",
+    "project_type_label": "\n项目类型: {type}",
+    "frameworks_label": "框架: {frameworks}",
+    "characteristics_label": "项目特征: {characteristics}",
+    "confidence_label": "检测置信度: {confidence}",
+    "document_context_header": "以下是项目的核心文档内容，请务必参考这些信息进行开发：",
+    "document_development_header": "\n### DEVELOPMENT.md（开发工作文档）\n",
+    "document_knowledge_header": "\n### KNOWLEDGE.md（项目知识库）\n",
+    "document_changelog_header": "\n### CHANGELOG.md（变更日志）\n",
+    "git_not_initialized": "【重要】检测到项目未初始化 Git 仓库。\n【强制】必须调用 `mcp-feedback-enhanced` 询问用户：\n1. 是否要初始化 Git 仓库？\n2. 期望的 Git 协作方式：\n   - github-flow: 简单分支策略，主分支 + 功能分支\n   - git-flow: 复杂分支策略，包含 develop、release、hotfix 等分支\n3. 是否要连接到 GitHub？",
+    "git_workflow_not_configured": "【重要】Git 仓库已存在，但未配置协作方式。\n【强制】必须调用 `mcp-feedback-enhanced` 询问用户期望的 Git 协作方式：\n- github-flow: 简单分支策略，主分支 + 功能分支\n- git-flow: 复杂分支策略，包含 develop、release、hotfix 等分支",
+    "git_workflow_label": "Git 工作流: {workflow}",
+    "mcp_tools_header": "\n\n【重要】关键 MCP 工具（请优先使用）：",
+    "mcp_tools_sequential_thinking": "- Sequential Thinking: 用于复杂问题分解和深度思考。遇到复杂任务时请务必使用。",
+    "mcp_tools_task_manager": "- Shrimp Task Manager: 用于任务规划和管理。需要分解任务时请使用。",
+    "mcp_tools_context7": "- Context7: 用于代码库理解和上下文检索。需要理解代码结构时使用。",
+    "document_maintenance_header": "\n\n【文档维护】",
+    "document_maintenance_location": "- 所有文档位于 `/project_document` 目录",
+    "document_maintenance_development": "- DEVELOPMENT.md: 开发工作文档（bullet-points 格式，自动更新）",
+    "document_maintenance_knowledge": "- KNOWLEDGE.md: 项目知识库（markdown-focused 格式，自动更新）",
+    "document_maintenance_changelog": "- CHANGELOG.md: 变更日志（bullet-points 格式，自动更新）",
+    "document_maintenance_architecture": "- ARCHITECTURE.md: 架构设计文档（markdown-focused 格式，在 INNOVATE 阶段编写）",
+    "document_maintenance_project": "- PROJECT.md: 项目总览文档（markdown-focused 格式，在 REVIEW 阶段编写）",
+    "document_maintenance_requirement": "- 每次重要操作后必须更新文档，严格遵循 output-styles 格式",
+    "git_branch_strategy_header": "\n\n【Git 分支策略】",
+    "git_branch_strategy_doc": "- 分支策略文档: `.claude/output-styles/git-branch-strategy.md`",
+    "git_branch_strategy_workflow": "- 根据配置的工作流（github-flow 或 git-flow）创建和管理分支",
+    "git_branch_strategy_naming": "- 分支命名规范: feature/功能名称、fix/问题描述、hotfix/紧急修复等",
+    "git_branch_strategy_commit": "- 提交信息遵循 commitlint 规范: type(scope): subject",
+    "ui_project_type": "🔍 项目类型: {type}",
+    "ui_skills_loaded": "📚 已加载 {count} 个 Skills",
+    "ui_documents_loaded": "📄 已加载项目文档"
+  },
+  "user_prompt_submit": {
+    "intent_analysis_header": "用户意图分析：",
+    "intent_type_label": "意图类型: {type}",
+    "intent_reason_label": "原因: {reason}",
+    "sequential_thinking_guidance": "【重要】这是一个复杂任务，请务必使用 Sequential Thinking MCP 进行问题分解。\n调用方式：使用 mcp__Sequential_Thinking__sequentialthinking 工具",
+    "task_manager_guidance": "【重要】这需要任务规划，请使用 Shrimp Task Manager MCP 进行任务分解。\n调用方式：使用 mcp__Shrimp_Task_Manager__plan_task 工具",
+    "skills_recommendation_header": "【建议】下面是与当前需求可能相关的 Skills，你可以按需调用以获取领域规范与最佳实践（完全可选）：",
+    "skills_recommendation_item": "  /{name}",
+    "skills_recommendation_reason": "\n推荐原因: {reason}",
+    "skills_recommendation_workflow": "\n使用建议（非强制）：\n1. 根据需要选择性调用上述 Skills，快速了解相关领域规范与约束；\n2. 如果任务较复杂，可以在参考 Skills 之后再使用 Sequential Thinking MCP 做分解与方案设计；\n3. 在实现与代码评审阶段，若引用了 Skills 中的规范，可优先参考但不作硬性约束。",
+    "skills_check_no_recommendation": "\n【Skills 检查】已根据当前需求检查可用 Skills，目前无需额外推荐。",
+    "prompt_enhancement_header": "\n\n提示词优化建议：",
+    "prompt_enhancement_reason": "原因: {reason}",
+    "prompt_enhancement_original": "原始提示: {prompt}",
+    "prompt_enhancement_enhanced": "优化后: {enhanced}",
+    "ui_sequential_thinking": "🧠 建议使用 Sequential Thinking",
+    "ui_task_manager": "📋 建议使用 Shrimp Task Manager",
+    "ui_skills_recommended": "⭐ 已推荐 Skills: {skills}",
+    "ui_skills_checked": "🔍 已检查 Skills（暂无推荐）",
+    "ui_prompt_enhanced": "💡 已提供优化建议"
+  },
+  "post_tool_use": {
+    "document_update_header": "【强制】必须更新以下文档（严格遵循 output-styles 格式）：\n",
+    "document_update_development": "### 1. 更新 DEVELOPMENT.md\n",
+    "document_update_knowledge": "### 2. 更新 KNOWLEDGE.md\n",
+    "document_update_changelog": "### 3. 更新 CHANGELOG.md\n",
+    "git_commit_header": "\n### 4. Git 提交\n",
+    "git_commit_requirement": "【强制】文档更新完成后，必须执行 Git 提交：\n- 工作流: {workflow}\n- 提交信息格式: 遵循 commitlint 规范 (type(scope): subject)\n- 提交内容: 包括文档更新和代码更改\n- 执行命令: `git add -A && git commit -m \"<commitlint格式>\"`",
+    "git_not_initialized_header": "\n### 4. Git 仓库检查\n",
+    "git_not_initialized_requirement": "【重要】检测到项目未初始化 Git 仓库。\n【强制】必须调用 `mcp-feedback-enhanced` 询问用户：\n1. 是否要初始化 Git 仓库？\n2. 期望的 Git 协作方式（github-flow 或 git-flow）？\n3. 是否要连接到 GitHub？",
+    "ui_document_update": "📝 需要更新文档",
+    "ui_git_commit": "🔀 需要 Git 提交",
+    "ui_git_not_initialized": "⚠️ 需要初始化 Git"
+  },
+  "stop": {
+    "knowledge_extraction_header": "会话知识:\n{knowledge}\n\n",
+    "knowledge_update_requirement": "【强制】请更新 `/project_document/KNOWLEDGE.md` 文档，添加以下内容：\n- 在\"技术决策记录\"或\"代码模式\"部分添加本次会话的知识\n- 知识内容: {knowledge}\n- 严格遵循 `.claude/output-styles/markdown-focused.md` 格式\n- 使用 **粗体** 强调关键概念，使用 `行内代码` 表示技术术语",
+    "ui_knowledge_extracted": "📚 已提取会话知识: {knowledge_preview}... | 请更新 KNOWLEDGE.md",
+    "tts_task_completed": "任务已完成，请查看结果"
+  },
+  "pre_compact": {
+    "context_summary_header": "上下文摘要:\n{summary}",
+    "ui_context_compressed": "📦 上下文已压缩，生成摘要: {summary_preview}..."
+  },
+  "subagent_stop": {
+    "subagent_completed": "子代理任务已完成",
+    "ui_subagent_completed": "✅ 子代理任务已完成",
+    "tts_subtask_completed": "子任务已完成"
+  },
+  "notification": {
+    "tts_need_input": "需要你的输入，请尽快处理"
+  },
+  "pre_tool_use": {
+    "ui_warning": "⚠️ 警告: {warning}",
+    "ui_suggestion": "💡 {suggestion}"
+  },
+  "ollama": {
+    "analyze_prompt": "分析这个用户输入，返回 JSON：\n\"{user_prompt}\"\n\n判断标准：\n1. 是否是模糊的开发需求（如\"做一个登录\"而非具体技术问题）\n2. 是否缺少关键技术细节\n3. 是否可以通过扩展来提高质量\n\n返回格式（只返回JSON，不要其他内容）：\n{{\"needs_enhance\": true/false, \"reason\": \"简短原因\", \"type\": \"requirement/question/command/other\"}}",
+    "enhance_prompt": "用户说：\"{user_prompt}\"\n\n将这个模糊需求扩展为清晰的技术需求，包括：\n1. 核心功能点（3-5个）\n2. 关键技术考虑\n3. 边界情况\n\n要求：简洁，不超过150字，直接输出要点",
+    "analyze_intent": "分析这个用户输入，返回 JSON：\n\"{user_prompt}\"\n\n判断是否需要使用以下 MCP 工具：\n\n1. Sequential Thinking：\n   - **必须满足**: 需要多步骤分解、涉及多个子系统、需要架构设计、需要权衡多个方案\n   - **不推荐情况**: 简单查询、单一功能实现、已有明确答案的问题、日常对话、代码审查、bug修复\n   - **示例不推荐**: \"Python 列表和元组的区别\"、\"创建一个文件\"、\"帮我看看这个错误\"、\"阅读这个文档\"\n   - **示例推荐**: \"设计一个完整的微服务架构\"、\"实现一个包含多个模块的系统\"\n\n2. Shrimp Task Manager：\n   - **必须满足**: 需要任务分解、需要项目管理、涉及多个子任务\n   - **不推荐情况**: 单一任务、简单操作\n\n**严格标准**: 只有当用户需求明确需要多步骤分解或架构设计时才推荐 Sequential Thinking。简单问题、查询、单一功能实现一律不推荐。\n\n返回格式（只返回JSON，不要其他内容）：\n{{\"needs_sequential_thinking\": true/false, \"needs_task_manager\": true/false, \"intent_type\": \"complex_task/simple_query/task_planning/other\", \"reason\": \"简短原因说明\"}}",
+    "analyze_tool_use": "分析这个工具调用，返回 JSON：\n工具: {tool_name}\n参数: {tool_input}\n\n判断：\n1. 是否有安全风险（删除文件、暴露密钥等）\n2. 是否有更好的替代方案\n3. 是否需要提醒用户\n\n返回格式（只返回JSON）：\n{{\"risk_level\": \"none/low/high\", \"warning\": \"警告信息或空\", \"suggestion\": \"建议或空\"}}",
+    "analyze_operation": "分析这个操作是否值得记录到项目文档中，返回 JSON：\n工具: {tool_name}\n参数: {tool_input}\n结果摘要: {result_summary}\n\n判断标准：\n1. 是否是重要的架构决策（应记录到 KNOWLEDGE.md）\n2. 是否修改了关键配置（应记录到 CHANGELOG.md）\n3. 是否解决了重要问题（应记录到 DEVELOPMENT.md）\n\n返回格式（只返回JSON）：\n{{\"should_document\": true/false, \"document_note\": \"简短记录内容或空\", \"target_doc\": \"DEVELOPMENT/KNOWLEDGE/CHANGELOG\"}}",
+    "recommend_skills": "分析这个用户输入，为其**可选性地**推荐合适的 Skills，返回 JSON：\n用户需求：\"{user_prompt}\"\n\n可用的 Skills：\n{skills_desc}\n\n判断思路（保持通用）：\n1. 不预设固定场景，尽量根据用户需求语义，在可用 Skills 中找到对当前任务**最有帮助**的几个\n2. 对于纯闲聊或与现有 Skills 完全无关的内容，可以返回空列表\n3. 如果能找到有一定相关性的 Skills，即使信心一般，也可以给出推荐（由上层自行决定是否采纳）\n4. 返回的 `recommended` 必须是“可用的 Skills 名称”列表子集\n\n返回格式（只返回JSON，不要其他内容）：\n{{\"recommended\": [\"skill-name-1\", \"skill-name-2\"], \"reason\": \"简短说明为什么选择这些 Skills\", \"confidence\": \"high/medium/low\"}}\n\n注意：\n- `recommended` 允许为空数组 []（表示当前不推荐任何 Skills）\n- `confidence` 仅为参考信息，上层可能选择在中/低置信度下仍然展示这些推荐",
+    "detect_project_type": "分析这个项目的类型和使用的框架/技术栈，返回 JSON：\n\n项目信息：\n{project_context}\n\n分析以下内容：\n1. 项目类型（nodejs/python/rust/go/java/php/other）\n2. 使用的框架和库（如 react, vue, django, flask, nextjs, typescript 等）\n3. 项目特征（如 monorepo, microservice, library 等）\n\n返回格式（只返回JSON，不要其他内容）：\n{{\"type\": \"项目类型\", \"frameworks\": [\"框架1\", \"框架2\"], \"characteristics\": [\"特征1\", \"特征2\"], \"confidence\": \"high/medium/low\"}}"
+  }
+}

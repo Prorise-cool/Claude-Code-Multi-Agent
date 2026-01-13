@@ -1,96 +1,96 @@
 ---
-description: Create a new Claude Code custom command
-argument-hint: [command-name] [description]
+description: 创建新的 Claude Code 自定义命令
+argument-hint: [命令名称] [描述]
 allowed-tools: Write, Read, LS, Bash(mkdir:*), Bash(ls:*), WebSearch(*)
 ---
 
-# Create Command
+# 创建命令
 
-Create a new Claude Code custom command with proper structure and best practices.
+使用适当的结构和最佳实践创建新的 Claude Code 自定义命令。
 
-## Usage:
+## 用法：
 
-`/create-command [command-name] [description]`
+`/create-command [命令名称] [描述]`
 
-## Process:
+## 流程：
 
-### 1. Command Analysis
+### 1. 命令分析
 
-- Determine command purpose and scope
-- Choose appropriate location (project vs user-level)
-- Analyze similar existing commands for patterns
+- 确定命令目的和范围
+- 选择适当的位置（项目级 vs 用户级）
+- 分析类似的现有命令以寻找模式
 
-### 2. Command Structure Planning
+### 2. 命令结构规划
 
-- Define required parameters and arguments
-- Plan command workflow and steps
-- Identify required tools and permissions
-- Consider error handling and edge cases
+- 定义必需的参数和参数
+- 规划命令工作流和步骤
+- 识别所需的工具和权限
+- 考虑错误处理和边缘情况
 
-### 3. Command Creation
+### 3. 命令创建
 
-- Create command file with proper YAML frontmatter
-- Include comprehensive documentation
-- Add usage examples and parameter descriptions
-- Implement proper argument handling with `$ARGUMENTS`
+- 使用适当的 YAML frontmatter 创建命令文件
+- 包含全面的文档
+- 添加使用示例和参数描述
+- 使用 `$ARGUMENTS` 实现适当的参数处理
 
-### 4. Quality Assurance
+### 4. 质量保证
 
-- Validate command syntax and structure
-- Test command functionality
-- Ensure proper tool permissions
-- Review against best practices
+- 验证命令语法和结构
+- 测试命令功能
+- 确保适当的工具权限
+- 对照最佳实践进行审查
 
-## Template Structure:
+## 模板结构：
 
 ```markdown
 ---
-description: Brief description of the command
-argument-hint: Expected arguments format
-allowed-tools: List of required tools
+description: 命令的简要描述
+argument-hint: 预期的参数格式
+allowed-tools: 所需工具列表
 ---
 
-# Command Name
+# 命令名称
 
-Detailed description of what this command does and when to use it.
+此命令的作用以及何时使用它的详细描述。
 
-## Usage:
+## 用法：
 
-`/[category:]command-name [arguments]`
+`/[类别:]命令名称 [参数]`
 
-## Process:
+## 流程：
 
-1. Step-by-step instructions
-2. Clear workflow definition
-3. Error handling considerations
+1. 分步说明
+2. 清晰的工作流定义
+3. 错误处理考虑
 
-## Examples:
+## 示例：
 
-- Concrete usage examples
-- Different parameter combinations
+- 具体使用示例
+- 不同的参数组合
 
-## Notes:
+## 注意事项：
 
-- Important considerations
-- Limitations or requirements
+- 重要考虑事项
+- 限制或要求
 ```
 
-## Best Practices:
+## 最佳实践：
 
-- Keep commands focused and single-purpose
-- Use descriptive names and clear documentation
-- Include proper tool permissions in frontmatter
-- Provide helpful examples and usage patterns
-- Handle arguments gracefully with validation
-- Follow existing command conventions
-- Test thoroughly before deployment
+- 保持命令专注和单一目的
+- 使用描述性名称和清晰的文档
+- 在 frontmatter 中包含适当的工具权限
+- 提供有用的示例和使用模式
+- 通过验证优雅地处理参数
+- 遵循现有命令约定
+- 部署前彻底测试
 
-## Your Task:
+## 你的任务：
 
-Create a new command named "$ARGUMENTS" following these guidelines:
+按照以下指南创建名为 "$ARGUMENTS" 的新命令：
 
-1. Ask for clarification on command purpose if description is unclear
-2. Determine appropriate location (project vs user-level) and category (e.g. gh, cc or ask user for others)
-3. Create command file with proper structure
-4. Include comprehensive documentation and examples
-5. Validate command syntax and functionality
+1. 如果描述不清楚，询问命令目的的澄清
+2. 确定适当的位置（项目级 vs 用户级）和类别（例如 gh、cc 或询问用户其他选项）
+3. 使用适当的结构创建命令文件
+4. 包含全面的文档和示例
+5. 验证命令语法和功能

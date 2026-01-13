@@ -1,0 +1,179 @@
+# CI 工作流 - 在拉取请求和推送时运行测试和代码检查
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+# 取消同一分支的进行中运行
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: 代码检查
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装 uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: 缓存 uv 依赖
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      - name: 安装依赖
+        run: uv sync
+
+      - name: 运行 Ruff 检查器
+        run: uv run ruff check .
+        continue-on-error: true
+
+      - name: 运行 Ruff 格式化检查
+        run: uv run ruff format --check .
+        continue-on-error: true
+
+  test:
+    name: 测试 Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 安装 uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: 缓存 uv 依赖
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-py${{ matrix.python-version }}-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-py${{ matrix.python-version }}-uv-
+
+      - name: 安装依赖
+        run: uv sync
+
+      - name: 运行测试
+        run: uv run pytest tests/ -v --tb=short
+        continue-on-error: true
+
+  validate-hooks:
+    name: 验证 Hooks
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装 uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: 安装依赖
+        run: uv sync
+
+      - name: 验证 Hook 语法
+        run: |
+          echo "正在验证 Python hook 文件..."
+          for file in .claude/hooks/*.py; do
+            if [ -f "$file" ]; then
+              echo "正在检查 $file"
+              uv run python -m py_compile "$file"
+            fi
+          done
+
+      - name: 验证 prompts.json
+        run: |
+          if [ -f ".claude/hooks/prompts.json" ]; then
+            echo "正在验证 prompts.json..."
+            uv run python -c "import json; json.load(open('.claude/hooks/prompts.json'))"
+            echo "prompts.json 是有效的 JSON"
+          fi
+
+  validate-skills:
+    name: 验证技能
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 检查 SKILL.md 文件
+        run: |
+          echo "正在检查技能目录中的 SKILL.md 文件..."
+          for dir in .claude/skills/*/; do
+            if [ -d "$dir" ]; then
+              skill_name=$(basename "$dir")
+              if [ ! -f "${dir}SKILL.md" ]; then
+                echo "警告: $skill_name 中缺少 SKILL.md"
+              else
+                echo "在 $skill_name 中找到 SKILL.md"
+                # 检查 YAML 前置元数据
+                if ! head -1 "${dir}SKILL.md" | grep -q "^---"; then
+                  echo "警告: ${dir}SKILL.md 中缺少 YAML 前置元数据"
+                fi
+              fi
+            fi
+          done
+
+  security-scan:
+    name: 安全扫描
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 运行 Trivy 漏洞扫描器
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: 上传 Trivy 扫描结果
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+        continue-on-error: true

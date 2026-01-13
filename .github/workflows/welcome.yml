@@ -1,0 +1,109 @@
+# 欢迎 - 问候首次贡献者
+name: 欢迎新贡献者
+
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  welcome-issue:
+    name: 欢迎问题作者
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues'
+    steps:
+      - name: 检查是否为首次问题
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const creator = context.payload.issue.user.login;
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              creator: creator,
+              state: 'all'
+            });
+            return issues.length === 1;
+          result-encoding: string
+
+      - name: 欢迎首次问题作者
+        if: steps.check.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const creator = context.payload.issue.user.login;
+
+            const message = `👋 欢迎 @${creator}！感谢您在 Claude Code Multi-Agent 中开启您的第一个问题！
+
+            我们感谢您花时间报告这个问题。以下是一些提示：
+
+            - 确保您已在问题模板中提供了所有请求的信息
+            - 查看[文档](https://github.com/Prorise-cool/Claude-Code-Multi-Agent/tree/master/project_document)以获取答案
+            - 加入我们的[讨论](https://github.com/Prorise-cool/Claude-Code-Multi-Agent/discussions)提问
+
+            维护者将很快审查您的问题。感谢您的贡献！🎉`;
+
+            github.rest.issues.createComment({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
+
+  welcome-pr:
+    name: 欢迎 PR 作者
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target'
+    steps:
+      - name: 检查是否为首次 PR
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const creator = context.payload.pull_request.user.login;
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'all'
+            });
+            const userPrs = prs.filter(pr => pr.user.login === creator);
+            return userPrs.length === 1;
+          result-encoding: string
+
+      - name: 欢迎首次 PR 作者
+        if: steps.check.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const creator = context.payload.pull_request.user.login;
+
+            const message = `🎉 欢迎 @${creator}！感谢您对 Claude Code Multi-Agent 的首次拉取请求！
+
+            我们很高兴您能做出贡献。接下来会发生什么：
+
+            1. **自动化检查**将在您的 PR 上运行
+            2. **维护者将审查**您的更改
+            3. 您可能会收到**反馈或更改请求**
+            4. 一旦获得批准，您的 PR 将被**合并**
+
+            在等待期间，请确保：
+            - [ ] 您的 PR 遵循我们的[贡献指南](https://github.com/Prorise-cool/Claude-Code-Multi-Agent/blob/master/.github/CONTRIBUTING.md)
+            - [ ] 所有自动化检查都通过
+            - [ ] 您已完整填写了 PR 模板
+
+            感谢您帮助使 Claude Code Multi-Agent 变得更好！🚀`;
+
+            github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });

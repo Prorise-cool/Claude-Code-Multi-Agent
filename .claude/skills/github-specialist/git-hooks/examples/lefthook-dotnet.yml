@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: true
+  commands:
+    dotnet-format:
+      glob: "*.{cs,vb}"
+      run: dotnet format --include {staged_files} --verify-no-changes --verbosity diagnostic
+
+    gitleaks:
+      run: gitleaks protect --staged --verbose
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no -- commitlint --edit $1
+
+pre-push:
+  parallel: true
+  commands:
+    dotnet-build:
+      run: dotnet build /warnaserror --no-restore
+
+    dotnet-test:
+      run: dotnet test --no-build --verbosity normal

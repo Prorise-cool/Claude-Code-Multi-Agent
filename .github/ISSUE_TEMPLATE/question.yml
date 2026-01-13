@@ -1,0 +1,80 @@
+name: 问题
+description: 询问有关使用 Claude Code Multi-Agent 的问题
+title: "[Question]: "
+labels: ["question"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        有问题？我们随时为您提供帮助！
+
+        **注意：** 对于一般讨论，请考虑使用 [GitHub 讨论](https://github.com/Prorise-cool/Claude-Code-Multi-Agent/discussions)。
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 先决条件
+      description: 请在提交前确认以下内容
+      options:
+        - label: 我已搜索现有问题和讨论以寻找答案
+          required: true
+        - label: 我已阅读文档
+          required: true
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: 问题主题
+      description: 您的问题是关于什么的？
+      options:
+        - 安装/设置
+        - Hooks 配置
+        - 技能使用
+        - 命令使用
+        - Ollama 集成
+        - 文档管理
+        - 贡献
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: 您的问题
+      description: 请详细描述您的问题
+      placeholder: |
+        我想了解如何...
+        最好的方法是...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 上下文
+      description: 提供任何可能帮助我们回答您问题的相关上下文
+      placeholder: |
+        我正在处理...
+        我的设置包括...
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: 我尝试过的
+      description: 您已经尝试过什么或研究过什么？
+      placeholder: |
+        我尝试过...
+        我阅读了关于...的文档
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境（如相关）
+      description: 如果与问题相关，请提供您的环境详细信息
+      placeholder: |
+        - 操作系统:
+        - Python 版本:
+        - Ollama 模型:

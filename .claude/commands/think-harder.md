@@ -1,54 +1,54 @@
 ---
-description: Enhanced analytical thinking for complex problems
-argument-hint: [problem or question]
+description: 针对复杂问题的增强分析思考
+argument-hint: [问题或疑问]
 ---
 
-# Think Harder Command
+# Think Harder 命令
 
-Engage in intensive analytical thinking to think harder about: **$ARGUMENTS**
+进行深入的分析思考，更深入地思考：**$ARGUMENTS**
 
-## Deep Analysis Protocol
+## 深度分析协议
 
-Apply systematic reasoning with the following methodology:
+使用以下方法应用系统推理：
 
-### 1. Problem Clarification
+### 1. 问题澄清
 
-- Define the core question and identify implicit assumptions
-- Establish scope, constraints, and success criteria
-- Surface potential ambiguities and multiple interpretations
+- 定义核心问题并识别隐含假设
+- 建立范围、约束和成功标准
+- 揭示潜在的歧义和多种解释
 
-### 2. Multi-Dimensional Analysis
+### 2. 多维分析
 
-- **Structural decomposition**: Break into fundamental components and dependencies
-- **Stakeholder perspectives**: Consider viewpoints of all affected parties
-- **Temporal analysis**: Examine short-term vs. long-term implications
-- **Causal reasoning**: Map cause-effect relationships and feedback loops
-- **Contextual factors**: Assess environmental, cultural, and situational influences
+- **结构分解**：分解为基本组件和依赖关系
+- **利益相关者视角**：考虑所有受影响方的观点
+- **时间分析**：检查短期与长期影响
+- **因果推理**：映射因果关系和反馈循环
+- **情境因素**：评估环境、文化和情境影响
 
-### 3. Critical Evaluation
+### 3. 批判性评估
 
-- Challenge your initial assumptions and identify cognitive biases
-- Generate and evaluate alternative hypotheses or solutions
-- Conduct pre-mortem analysis: What could go wrong and why?
-- Consider opportunity costs and trade-offs for each approach
-- Assess confidence levels and sources of uncertainty
+- 挑战你的初始假设并识别认知偏差
+- 生成并评估替代假设或解决方案
+- 进行事前分析：什么可能出错以及为什么？
+- 考虑每种方法的机会成本和权衡
+- 评估置信水平和不确定性来源
 
-### 4. Synthesis and Integration
+### 4. 综合和整合
 
-- Connect insights across different domains and disciplines
-- Identify emergent properties from component interactions
-- Reconcile apparent contradictions or paradoxes
-- Develop meta-insights about the problem-solving process itself
+- 连接不同领域和学科的见解
+- 识别组件交互产生的涌现属性
+- 调和明显的矛盾或悖论
+- 开发关于问题解决过程本身的元见解
 
-## Output Structure
+## 输出结构
 
-Present your analysis in this format:
+按以下格式呈现你的分析：
 
-1. **Problem Reframing**: How you understand the core issue
-2. **Key Insights**: Most important discoveries from your analysis
-3. **Reasoning Chain**: Step-by-step logical progression
-4. **Alternatives Considered**: Different approaches evaluated
-5. **Uncertainties**: What you don't know and why it matters
-6. **Actionable Recommendations**: Specific, implementable next steps
+1. **问题重新框架**：你如何理解核心问题
+2. **关键见解**：分析中最重要的发现
+3. **推理链**：逐步的逻辑进展
+4. **考虑的替代方案**：评估的不同方法
+5. **不确定性**：你不知道什么以及为什么重要
+6. **可操作的建议**：具体的、可实施的下一步
 
-Be thorough yet concise. Show your reasoning process, not just conclusions.
+要彻底但简洁。展示你的推理过程，而不仅仅是结论。

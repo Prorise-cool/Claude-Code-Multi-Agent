@@ -3,3 +3,36 @@ venv_linux
 __pycache__
 .ruff_cache
 .pytest_cache
+
+# Logs and runtime files
+logs/
+*.log
+
+# IDE and editor files
+.qodo/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/

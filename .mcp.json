@@ -1,0 +1,127 @@
+{
+  "mcpServers": {
+    "Context7": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@upstash/context7-mcp@latest"]
+    },
+    "Exa AI (搜索)": {
+      "type": "http",
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": {}
+    },
+    "mcp-feedback-enhanced": {
+      "command": "uvx",
+      "args": ["mcp-feedback-enhanced@latest"],
+      "timeout": 600,
+      "env": {
+        "MCP_DESKTOP_MODE": "true",
+        "MCP_WEB_HOST": "127.0.0.1",
+        "MCP_WEB_PORT": "8765",
+        "MCP_DEBUG": "false"
+      },
+      "autoApprove": ["interactive_feedback"]
+    },
+    "Sequential Thinking": {
+      "command": "cmd",
+      "args": ["/c", "npx", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "Shrimp Task Manager": {
+      "command": "cmd",
+      "args": ["/c", "npx", "mcp-shrimp-task-manager"]
+    },
+    "everything-search": {
+      "command": "cmd",
+      "args": ["/c", "uvx", "mcp-server-everything-search"],
+      "env": {
+        "EVERYTHING_SDK_PATH": "E:\\\\everythingsdk\\\\dll\\\\Everything64.dll"
+      }
+    },
+    "github": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+      }
+    },
+    "filesystem": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:\\\\",
+        "C:\\\\Users\\\\Prorise\\\\Desktop",
+        "E:\\\\"
+      ]
+    },
+    "magic": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@21st-dev/magic@latest"],
+      "env": {
+        "API_KEY": ""
+      }
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@playwright/mcp@latest"],
+      "env": {}
+    },
+    "docker": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "mcp-server-docker"],
+      "env": {}
+    },
+    "mysql": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@benborla29/mcp-server-mysql"],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "root",
+        "MYSQL_PASS": "root",
+        "MYSQL_DB": "security"
+      }
+    },
+    "magic-ui": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "magicui-mcp"],
+      "env": {}
+    },
+    "time-mcp": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "time-mcp"],
+      "env": {}
+    },
+    "redis-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@pickstar-2002/redis-mcp@latest",
+        "--host",
+        "localhost",
+        "--port",
+        "6379",
+        "--password",
+        "",
+        "--db",
+        "0",
+        "--username",
+        "root"
+      ]
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "chrome-devtools-mcp@latest"],
+      "env": {}
+    }
+  }
+}

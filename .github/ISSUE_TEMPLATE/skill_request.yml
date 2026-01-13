@@ -1,0 +1,113 @@
+name: 技能请求
+description: 为多代理系统请求新技能
+title: "[Skill]: "
+labels: ["skill-request", "enhancement"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您建议新技能！
+        技能是提供领域专业知识的专业代理。请描述您希望添加的技能。
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 先决条件
+      description: 请在提交前确认以下内容
+      options:
+        - label: 我已检查 `.claude/skills/` 中的现有技能以确保此技能不存在
+          required: true
+        - label: 我已搜索现有问题以查找类似的技能请求
+          required: true
+
+  - type: input
+    id: skill_name
+    attributes:
+      label: 技能名称
+      description: 建议的技能名称（使用 kebab-case）
+      placeholder: 例如，kubernetes-specialist, graphql-expert
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 技能描述
+      description: 此技能应该做什么？它应该提供什么专业知识？
+      placeholder: |
+        此技能应该帮助...
+        它应该能够...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 技能类别
+      description: 此技能属于哪个类别？
+      options:
+        - 后端开发
+        - 前端开发
+        - DevOps/基础设施
+        - 数据库/数据
+        - 安全
+        - 测试
+        - 文档
+        - 设计/UX
+        - AI/ML
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_cases
+    attributes:
+      label: 用例
+      description: 何时会有人使用此技能？提供具体示例
+      placeholder: |
+        - 设置新的 Kubernetes 集群时
+        - 调试 Pod 网络问题时
+        - 编写 Helm 图表时
+    validations:
+      required: true
+
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: 预期能力
+      description: 此技能应该具有哪些具体能力？
+      placeholder: |
+        1. 生成 Kubernetes 清单的能力
+        2. 了解 Pod 安全的最佳实践
+        3. 理解服务网格配置
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考材料
+      description: 应该为此技能提供信息的任何文档、指南或资源
+      placeholder: |
+        - 官方 Kubernetes 文档
+        - CNCF 最佳实践指南
+        - 特定的博客文章或教程
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 贡献
+      description: 您是否愿意帮助创建此技能？
+      options:
+        - label: 我愿意为此技能提交 PR
+        - label: 我可以提供参考文档
+        - label: 我可以帮助测试
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 附加上下文
+      description: 有关技能请求的任何其他信息
+      placeholder: 任何其他上下文...

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+  "tasks": [
+    {
+      "name": "dotnet-format",
+      "group": "pre-commit",
+      "command": "dotnet",
+      "args": ["format", "--include", "${staged}", "--verify-no-changes", "--verbosity", "diagnostic"],
+      "include": ["**/*.cs", "**/*.vb"],
+      "output": "always"
+    },
+    {
+      "name": "gitleaks-scan",
+      "group": "pre-commit",
+      "command": "gitleaks",
+      "args": ["protect", "--staged", "--verbose"],
+      "output": "always"
+    },
+    {
+      "name": "dotnet-build-warnings",
+      "group": "pre-push",
+      "command": "dotnet",
+      "args": ["build", "/warnaserror", "--no-restore"],
+      "include": ["**/*.cs", "**/*.vb"],
+      "output": "always"
+    },
+    {
+      "name": "dotnet-test",
+      "group": "pre-push",
+      "command": "dotnet",
+      "args": ["test", "--no-build", "--verbosity", "normal"],
+      "include": ["**/*.cs", "**/*.vb"],
+      "output": "always"
+    },
+    {
+      "name": "commit-message-linter",
+      "group": "commit-msg",
+      "command": "npx",
+      "args": ["--no", "--", "commitlint", "--edit", "${args}"],
+      "output": "always"
+    },
+    {
+      "name": "welcome-message",
+      "output": "always",
+      "command": "bash",
+      "args": ["-c", "echo '✅ All checks passed! Nice work!'"],
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "echo ✅ All checks passed! Nice work!"]
+      }
+    }
+  ]
+}

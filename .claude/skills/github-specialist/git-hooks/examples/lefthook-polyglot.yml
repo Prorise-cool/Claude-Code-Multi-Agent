@@ -1,0 +1,49 @@
+pre-commit:
+  parallel: true
+  commands:
+    # .NET/C# formatting
+    dotnet-format:
+      glob: "*.{cs,vb}"
+      run: dotnet format --include {staged_files} --verify-no-changes
+
+    # JavaScript/TypeScript linting and formatting
+    eslint:
+      glob: "*.{js,ts,jsx,tsx}"
+      run: npx eslint --fix {staged_files}
+
+    prettier-js:
+      glob: "*.{js,ts,jsx,tsx,json,md,yml,yaml}"
+      run: npx prettier --write {staged_files}
+
+    # Python linting and formatting
+    ruff-lint:
+      glob: "*.py"
+      run: ruff check --fix {staged_files}
+
+    ruff-format:
+      glob: "*.py"
+      run: ruff format {staged_files}
+
+    # Security scanning (all files)
+    gitleaks:
+      run: gitleaks protect --staged --verbose
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no -- commitlint --edit $1
+
+pre-push:
+  parallel: true
+  commands:
+    # .NET tests
+    dotnet-test:
+      run: dotnet test --no-build --verbosity normal
+
+    # JavaScript tests
+    npm-test:
+      run: npm test
+
+    # Python tests
+    pytest:
+      run: pytest

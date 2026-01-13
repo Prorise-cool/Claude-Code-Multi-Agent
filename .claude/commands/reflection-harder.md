@@ -1,177 +1,176 @@
 ---
-description: Comprehensive session analysis and learning capture
+description: 全面的会话分析和学习捕获
 argument-hint: none
 allowed-tools: Read, Write, TodoWrite, Bash(git:*)
 ---
 
-You are an expert in analyzing development sessions and optimizing AI-human collaboration. Your task is to reflect on today's work session and extract learnings that will improve future interactions.
+你是一位分析开发会话和优化 AI-人类协作的专家。你的任务是反思今天的工作会话并提取将改善未来交互的学习成果。
 
-## Session Analysis Phase
+## 会话分析阶段
 
-  Review the entire conversation history and identify:
+  查看整个对话历史并识别：
 
-### 1. Problems & Solutions
+### 1. 问题和解决方案
 
-- **What problems did we encounter?**
-  - Initial symptoms reported by user
-  - Root causes discovered
-  - Solutions implemented
-  - Key insights learned
+- **我们遇到了什么问题？**
+  - 用户报告的初始症状
+  - 发现的根本原因
+  - 实施的解决方案
+  - 学习到的关键见解
 
-### 2. Code Patterns & Architecture
+### 2. 代码模式和架构
 
-- **What patterns emerged?**
-  - Design decisions made
-  - Architecture choices
-  - Code relationships discovered
-  - Integration points identified
+- **出现了什么模式？**
+  - 做出的设计决策
+  - 架构选择
+  - 发现的代码关系
+  - 识别的集成点
 
-### 3. User Preferences & Workflow
+### 3. 用户偏好和工作流
 
-- **How does the user prefer to work?**
-  - Communication style
-  - Decision-making patterns
-  - Quality standards
-  - Workflow preferences
-  - Direct quotes that reveal preferences
+- **用户更喜欢如何工作？**
+  - 沟通风格
+  - 决策模式
+  - 质量标准
+  - 工作流偏好
+  - 揭示偏好的直接引用
 
-### 4. System Understanding
+### 4. 系统理解
 
-- **What did we learn about the system?**
-  - Component interactions
-  - Critical paths and dependencies
-  - Failure modes and recovery
-  - Performance considerations
+- **我们对系统了解到了什么？**
+  - 组件交互
+  - 关键路径和依赖关系
+  - 失败模式和恢复
+  - 性能考虑
 
-### 5. Knowledge Gaps & Improvements
+### 5. 知识差距和改进
 
-- **Where can we improve?**
-  - Misunderstandings that occurred
-  - Information that was missing
-  - Better approaches discovered
-  - Future considerations
+- **我们可以在哪里改进？**
+  - 发生的误解
+  - 缺失的信息
+  - 发现的更好方法
+  - 未来的考虑
 
-## Reflection Output Phase
+## 反思输出阶段
 
-  Structure your reflection in this format:
+  按以下格式构建你的反思：
 
   <session_overview>
 
-- Date: [Today's date]
-- Primary objectives: [What we set out to do]
-- Outcome: [What was accomplished]
-- Time invested: [Approximate duration]
+- 日期：[今天的日期]
+- 主要目标：[我们打算做什么]
+- 结果：[完成了什么]
+- 投入时间：[大约持续时间]
   </session_overview>
 
   <problems_solved>
-  [For each major problem:]
-  Problem: [Name]
+  [对于每个主要问题：]
+  问题：[名称]
 
-- User Experience: [What the user saw/experienced]
-- Technical Cause: [Why it happened]
-- Solution Applied: [What we did]
-- Key Learning: [Important insight for future]
-- Related Files: [Key files involved]
+- 用户体验：[用户看到/体验到的]
+- 技术原因：[为什么会发生]
+- 应用的解决方案：[我们做了什么]
+- 关键学习：[对未来重要的见解]
+- 相关文件：[涉及的关键文件]
   </problems_solved>
 
   <patterns_established>
-  [For each pattern:]
+  [对于每个模式：]
 
-- Pattern: [Name and description]
-- Example: [Specific code/command]
-- When to Apply: [Circumstances]
-- Why It Matters: [Impact on system]
+- 模式：[名称和描述]
+- 示例：[特定代码/命令]
+- 何时应用：[情况]
+- 为什么重要：[对系统的影响]
   </patterns_established>
 
   <user_preferences>
-  [For each preference discovered:]
+  [对于每个发现的偏好：]
 
-- Preference: [What user prefers]
-- Evidence: "[Direct quote from user]"
-- How to Apply: [Specific implementation]
-- Priority: [High/Medium/Low]
+- 偏好：[用户偏好什么]
+- 证据："[来自用户的直接引用]"
+- 如何应用：[具体实施]
+- 优先级：[高/中/低]
   </user_preferences>
 
   <system_relationships>
-  [For each relationship:]
+  [对于每个关系：]
 
-- Component A → Component B: [Interaction description]
-- Trigger: [What causes interaction]
-- Effect: [What happens]
-- Monitoring: [How to observe it]
+- 组件 A → 组件 B：[交互描述]
+- 触发：[什么导致交互]
+- 效果：[发生了什么]
+- 监控：[如何观察它]
   </system_relationships>
 
   <knowledge_updates>
 
-## Updates for CLAUDE.md
+## 对 CLAUDE.md 的更新
 
-  [Key points that should be added to project memory:]
+  [应该添加到项目记忆中的关键点：]
 
-- [Point 1]
-- [Point 2]
+- [要点 1]
+- [要点 2]
 
-## Code Comments Needed
+## 需要的代码注释
 
-  [Where comments would help future understanding:]
+  [注释有助于未来理解的地方：]
 
-- File: [Path] - Explain: [What needs clarification]
+- 文件：[路径] - 解释：[需要澄清的内容]
 
-## Documentation Improvements
+## 文档改进
 
-  [What should be added to README or docs:]
+  [应该添加到 README 或文档中的内容：]
 
-- Topic: [What to document]
-- Location: [Where to add it]
+- 主题：[要记录的内容]
+- 位置：[在哪里添加]
   </knowledge_updates>
 
   <commands_and_tools>
 
-## Useful Commands Discovered
+## 发现的有用命令
 
-- `[command]`: [What it does and when to use it]
+- `[命令]`：[它的作用以及何时使用]
 
-## Key File Locations
+## 关键文件位置
 
-- [Path]: [What it contains and why it matters]
+- [路径]：[它包含什么以及为什么重要]
 
-## Debugging Workflows
+## 调试工作流
 
-- When [X] happens: [Step-by-step approach]
+- 当 [X] 发生时：[逐步方法]
   </commands_and_tools>
 
   <future_improvements>
 
-## For Next Session
+## 下次会话
 
-- Remember to: [Important points]
-- Watch out for: [Potential issues]
-- Consider: [Alternative approaches]
+- 记住：[重要点]
+- 注意：[潜在问题]
+- 考虑：[替代方法]
 
-## Suggested Enhancements
+## 建议的增强
 
-- Tool/Command: [What could be improved]
-- Workflow: [How to optimize]
-- Documentation: [What's missing]
+- 工具/命令：[可以改进的内容]
+- 工作流：[如何优化]
+- 文档：[缺少什么]
   </future_improvements>
 
   <collaboration_insights>
 
-## Working Better Together
+## 更好地协作
 
-- Communication: [What worked well]
-- Efficiency: [How to save time]
-- Understanding: [How to clarify requirements]
-- Trust: [Where autonomy is appropriate]
+- 沟通：[什么效果很好]
+- 效率：[如何节省时间]
+- 理解：[如何澄清需求]
+- 信任：[自主权在哪里合适]
   </collaboration_insights>
 
-## Action Items
+## 行动项
 
-  [What should be done after this reflection:]
+  [这次反思后应该做什么：]
 
-  1. Update CLAUDE.md with: [Specific sections]
-  2. Add comments to: [Specific files]
-  3. Create documentation for: [Specific topics]
-  4. Test: [What needs verification]
+  1. 更新 CLAUDE.md：[具体部分]
+  2. 添加注释到：[特定文件]
+  3. 创建文档：[特定主题]
+  4. 测试：[需要验证的内容]
 
-  Remember: The goal is to build cumulative knowledge that makes each session more effective than the last. Focus on patterns, preferences, and system understanding that will
-  apply to future work.
+  记住：目标是建立累积知识，使每个会话都比上一个更有效。专注于将适用于未来工作的模式、偏好和系统理解。

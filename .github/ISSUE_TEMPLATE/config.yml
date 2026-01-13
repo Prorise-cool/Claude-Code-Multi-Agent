@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 讨论
+    url: https://github.com/Prorise-cool/Claude-Code-Multi-Agent/discussions
+    about: 使用讨论进行提问、想法和一般对话
+  - name: 文档
+    url: https://github.com/Prorise-cool/Claude-Code-Multi-Agent/tree/master/project_document
+    about: 在开启问题之前查看文档

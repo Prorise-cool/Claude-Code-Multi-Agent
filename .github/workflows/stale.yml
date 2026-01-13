@@ -1,0 +1,66 @@
+# 过期 - 自动标记和关闭过期的问题和 PR
+name: 过期问题和 PR
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 午夜运行
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    name: 标记过期问题和 PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: 标记过期问题和 PR
+        uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          # 问题设置
+          stale-issue-message: |
+            此问题已自动标记为过期，因为它最近没有活动。
+            如果 14 天内没有进一步活动，它将被关闭。
+
+            如果此问题仍然相关：
+            - 添加评论并提供更新
+            - 移除 `stale` 标签
+
+            感谢您的贡献！
+          stale-issue-label: 'stale'
+          days-before-issue-stale: 60
+          days-before-issue-close: 14
+          exempt-issue-labels: 'pinned,security,bug,in-progress,help-wanted'
+
+          # PR 设置
+          stale-pr-message: |
+            此拉取请求已自动标记为过期，因为它最近没有活动。
+            如果 14 天内没有进一步活动，它将被关闭。
+
+            如果此 PR 仍然相关：
+            - 在最新的 main 分支上重新基于
+            - 处理任何审查评论
+            - 添加评论并提供更新
+
+            感谢您的贡献！
+          stale-pr-label: 'stale'
+          days-before-pr-stale: 30
+          days-before-pr-close: 14
+          exempt-pr-labels: 'pinned,security,in-progress,awaiting-review'
+
+          # 关闭消息
+          close-issue-message: |
+            此问题已因不活动而自动关闭。
+            如果仍然相关，请随时重新打开。
+          close-pr-message: |
+            此拉取请求已因不活动而自动关闭。
+            如果您想继续处理，请随时重新打开。
+
+          # 每次运行的操作数
+          operations-per-run: 100
+
+          # 更新时移除过期标签
+          remove-stale-when-updated: true

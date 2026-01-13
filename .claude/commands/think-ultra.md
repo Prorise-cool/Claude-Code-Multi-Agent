@@ -1,125 +1,125 @@
 ---
-description: Ultra-comprehensive analytical thinking for the most complex problems
-argument-hint: [complex problem or question]
+description: 针对最复杂问题的超全面分析思考
+argument-hint: [复杂问题或疑问]
 ---
 
-# Think Ultra Command
+# Think Ultra 命令
 
-Activate maximum cognitive ultrathink processing for ultra-comprehensive analysis of: **$ARGUMENTS**
+激活最大认知超思考处理，对以下内容进行超全面分析：**$ARGUMENTS**
 
-## Ultra-Analysis Framework
+## 超分析框架
 
-Deploy the most rigorous analytical methodology with exhaustive examination across all dimensions:
+部署最严格的分析方法，对所有维度进行详尽检查：
 
-### Phase 1: Problem Architecture
+### 阶段 1：问题架构
 
-- **Ontological analysis**: What is the fundamental nature of this problem?
-- **Epistemological examination**: How do we know what we know about this?
-- **Semantic decomposition**: Deconstruct all key terms and concepts
-- **Boundary analysis**: What's included, excluded, and why?
-- **Meta-problem identification**: What's the problem behind the problem?
+- **本体论分析**：这个问题的根本性质是什么？
+- **认识论检查**：我们如何知道我们所知道的？
+- **语义分解**：解构所有关键术语和概念
+- **边界分析**：包含什么、排除什么，以及为什么？
+- **元问题识别**：问题背后的问题是什么？
 
-### Phase 2: Multi-Paradigm Analysis
+### 阶段 2：多范式分析
 
-- **Reductionist approach**: Break down to smallest analyzable components
-- **Holistic systems view**: Examine emergent properties and interactions
-- **Dialectical reasoning**: Explore contradictions and their resolution
-- **Phenomenological perspective**: How is this experienced subjectively?
-- **Pragmatic evaluation**: What works in practice vs. theory?
+- **还原主义方法**：分解为最小的可分析组件
+- **整体系统视角**：检查涌现属性和相互作用
+- **辩证推理**：探索矛盾及其解决
+- **现象学视角**：这在主观上如何被体验？
+- **实用主义评估**：实践中什么有效 vs 理论？
 
-### Phase 3: Cross-Disciplinary Integration
+### 阶段 3：跨学科整合
 
-- **Scientific methodology**: Hypothesis formation, testing, validation
-- **Mathematical modeling**: Quantitative relationships and patterns
-- **Philosophical frameworks**: Logical consistency and ethical implications
-- **Historical analysis**: Patterns, precedents, and evolutionary trends
-- **Anthropological view**: Cultural, social, and behavioral dimensions
-- **Economic analysis**: Resource allocation, incentives, and trade-offs
+- **科学方法论**：假设形成、测试、验证
+- **数学建模**：定量关系和模式
+- **哲学框架**：逻辑一致性和伦理含义
+- **历史分析**：模式、先例和演化趋势
+- **人类学视角**：文化、社会和行为维度
+- **经济分析**：资源配置、激励和权衡
 
-### Phase 4: Temporal and Spatial Scaling
+### 阶段 4：时间和空间尺度
 
-- **Multi-timescale analysis**: Immediate, short-term, medium-term, long-term
-- **Generational thinking**: Impact across multiple generations
-- **Spatial scaling**: Local, regional, national, global implications
-- **Fractal analysis**: Self-similar patterns across different scales
-- **Path dependency**: How history constrains future options
+- **多时间尺度分析**：即时、短期、中期、长期
+- **代际思考**：跨多代的影响
+- **空间尺度**：本地、区域、国家、全球影响
+- **分形分析**：不同尺度的自相似模式
+- **路径依赖**：历史如何约束未来选择
 
-### Phase 5: Uncertainty and Risk Modeling
+### 阶段 5：不确定性和风险建模
 
-- **Probabilistic reasoning**: Bayesian updating and confidence intervals
-- **Scenario planning**: Multiple future pathways and their implications
-- **Black swan analysis**: Low-probability, high-impact events
-- **Antifragility assessment**: What benefits from disorder?
-- **Robustness testing**: Performance under various stress conditions
+- **概率推理**：贝叶斯更新和置信区间
+- **情景规划**：多种未来路径及其影响
+- **黑天鹅分析**：低概率、高影响事件
+- **反脆弱性评估**：什么从混乱中受益？
+- **稳健性测试**：各种压力条件下的性能
 
-### Phase 6: Decision Theory and Game Theory
+### 阶段 6：决策理论和博弈论
 
-- **Multi-criteria decision analysis**: Weighted evaluation of options
-- **Strategic interactions**: How others' decisions affect outcomes
-- **Mechanism design**: Optimal system architecture for desired outcomes
-- **Behavioral economics**: Cognitive biases and psychological factors
-- **Evolutionary stable strategies**: What persists over time?
+- **多标准决策分析**：选项的加权评估
+- **战略互动**：他人的决策如何影响结果
+- **机制设计**：期望结果的最优系统架构
+- **行为经济学**：认知偏差和心理因素
+- **演化稳定策略**：什么会持续存在？
 
-### Phase 7: Meta-Cognitive Reflection
+### 阶段 7：元认知反思
 
-- **Cognitive bias audit**: Systematic identification of thinking errors
-- **Perspective-taking**: Steel-manning opposing viewpoints
-- **Assumption archaeology**: Digging deep into foundational beliefs
-- **Reasoning transparency**: Making implicit logic explicit
-- **Intellectual humility**: Acknowledging limits and uncertainties
+- **认知偏差审计**：系统识别思维错误
+- **换位思考**：强化对立观点
+- **假设考古学**：深入挖掘基础信念
+- **推理透明度**：使隐含逻辑显式化
+- **知识谦逊**：承认局限性和不确定性
 
-## Ultra-Structured Output
+## 超结构化输出
 
-Present your comprehensive analysis using this detailed format:
+使用以下详细格式呈现你的全面分析：
 
-### 1. Problem Reconceptualization
+### 1. 问题重新概念化
 
-- **Original question**: As stated
-- **Refined question**: After deep analysis
-- **Hidden assumptions**: Uncovered implicit beliefs
-- **Reframing**: Alternative ways to view the issue
+- **原始问题**：如所述
+- **精炼问题**：深度分析后
+- **隐藏假设**：发现的隐含信念
+- **重新框架**：看待问题的替代方式
 
-### 2. Multi-Dimensional Mapping
+### 2. 多维映射
 
-- **Core components**: Essential elements and their relationships
-- **System dynamics**: Feedback loops and emergent behaviors
-- **Stakeholder ecosystem**: All affected parties and their interests
-- **Constraint analysis**: Limitations and boundary conditions
+- **核心组件**：基本要素及其关系
+- **系统动力学**：反馈循环和涌现行为
+- **利益相关者生态系统**：所有受影响方及其利益
+- **约束分析**：限制和边界条件
 
-### 3. Evidence and Research Integration
+### 3. 证据和研究整合
 
-- **Data synthesis**: Relevant empirical findings
-- **Theoretical frameworks**: Applicable models and theories
-- **Case studies**: Historical precedents and analogies
-- **Expert consensus**: Areas of agreement and disagreement
+- **数据综合**：相关的实证发现
+- **理论框架**：适用的模型和理论
+- **案例研究**：历史先例和类比
+- **专家共识**：一致和分歧的领域
 
-### 4. Comprehensive Option Analysis
+### 4. 全面选项分析
 
-- **Option generation**: Creative alternatives beyond obvious choices
-- **Multi-criteria evaluation**: Systematic comparison across dimensions
-- **Sensitivity analysis**: How robust are conclusions to assumption changes?
-- **Implementation pathways**: Practical steps for each option
+- **选项生成**：超越明显选择的创造性替代方案
+- **多标准评估**：跨维度的系统比较
+- **敏感性分析**：结论对假设变化的稳健性如何？
+- **实施路径**：每个选项的实用步骤
 
-### 5. Risk and Uncertainty Assessment
+### 5. 风险和不确定性评估
 
-- **Known unknowns**: Identified areas of uncertainty
-- **Unknown unknowns**: Potential blind spots
-- **Failure modes**: What could go wrong and why
-- **Mitigation strategies**: Risk reduction approaches
+- **已知的未知**：已识别的不确定性领域
+- **未知的未知**：潜在的盲点
+- **失败模式**：什么可能出错以及为什么
+- **缓解策略**：风险降低方法
 
-### 6. Strategic Recommendations
+### 6. 战略建议
 
-- **Primary recommendation**: Best course of action with rationale
-- **Alternative pathways**: Backup options and contingencies
-- **Implementation roadmap**: Sequenced steps with timelines
-- **Success metrics**: How to measure progress and outcomes
-- **Adaptation triggers**: When to reconsider the approach
+- **主要建议**：最佳行动方案及理由
+- **替代路径**：备选方案和应急措施
+- **实施路线图**：带时间线的顺序步骤
+- **成功指标**：如何衡量进展和结果
+- **适应触发**：何时重新考虑方法
 
-### 7. Meta-Analysis and Reflection
+### 7. 元分析和反思
 
-- **Confidence assessment**: How certain are you and why?
-- **Key insights**: Most important discoveries
-- **Remaining questions**: What still needs investigation?
-- **Learning opportunities**: What this analysis teaches about problem-solving
+- **置信度评估**：你有多确定以及为什么？
+- **关键见解**：最重要的发现
+- **剩余问题**：仍需要调查什么？
+- **学习机会**：这个分析对问题解决有什么启示
 
-**Note**: This ultra-analysis may require significant processing time and computational resources. The depth of analysis should match the complexity and importance of the problem. Consider using `/think-harder` for less complex issues that don't require the full 7-phase ultra-comprehensive framework.
+**注意**：这种超分析可能需要大量处理时间和计算资源。分析的深度应与问题的复杂性和重要性相匹配。对于不需要完整 7 阶段超全面框架的较简单问题，请考虑使用 `/think-harder`。

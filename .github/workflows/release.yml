@@ -1,0 +1,147 @@
+# 发布 - 自动化发布工作流
+name: 发布
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '要发布的版本（例如，v1.0.0）'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: 创建发布
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 获取版本
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 生成变更日志
+        id: changelog
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: releases } = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 1
+            });
+
+            const previousTag = releases.length > 0 ? releases[0].tag_name : '';
+
+            let commits;
+            if (previousTag) {
+              const { data: comparison } = await github.rest.repos.compareCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                base: previousTag,
+                head: context.sha
+              });
+              commits = comparison.commits;
+            } else {
+              const { data: allCommits } = await github.rest.repos.listCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 50
+              });
+              commits = allCommits;
+            }
+
+            const features = [];
+            const fixes = [];
+            const docs = [];
+            const other = [];
+
+            for (const commit of commits) {
+              const message = commit.commit.message.split('\n')[0];
+              const author = commit.author ? `@${commit.author.login}` : commit.commit.author.name;
+              const sha = commit.sha.substring(0, 7);
+              const entry = `- ${message} (${sha}) by ${author}`;
+
+              if (message.startsWith('feat:') || message.startsWith('feat(')) {
+                features.push(entry);
+              } else if (message.startsWith('fix:') || message.startsWith('fix(')) {
+                fixes.push(entry);
+              } else if (message.startsWith('docs:') || message.startsWith('docs(')) {
+                docs.push(entry);
+              } else {
+                other.push(entry);
+              }
+            }
+
+            let changelog = '';
+
+            if (features.length > 0) {
+              changelog += '## ✨ 新功能\n\n' + features.join('\n') + '\n\n';
+            }
+            if (fixes.length > 0) {
+              changelog += '## 🐛 Bug 修复\n\n' + fixes.join('\n') + '\n\n';
+            }
+            if (docs.length > 0) {
+              changelog += '## 📚 文档\n\n' + docs.join('\n') + '\n\n';
+            }
+            if (other.length > 0) {
+              changelog += '## 🔧 其他更改\n\n' + other.join('\n') + '\n\n';
+            }
+
+            return changelog;
+          result-encoding: string
+
+      - name: 创建发布
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = '${{ steps.version.outputs.version }}';
+            const changelog = `${{ steps.changelog.outputs.result }}`;
+
+            const releaseBody = `# Claude Code Multi-Agent ${version}
+
+            ${changelog}
+
+            ## 安装
+
+            \`\`\`bash
+            git clone https://github.com/Prorise-cool/Claude-Code-Multi-Agent.git
+            cd Claude-Code-Multi-Agent
+            uv sync
+            \`\`\`
+
+            ## 快速开始
+
+            1. 将 \`.env.example\` 复制为 \`.env\`
+            2. 配置您的 Ollama 模型
+            3. 开始使用具有增强多代理功能的 Claude Code！
+
+            查看 [README](https://github.com/Prorise-cool/Claude-Code-Multi-Agent#readme) 获取详细说明。
+
+            ---
+            **完整变更日志**: https://github.com/Prorise-cool/Claude-Code-Multi-Agent/compare/${version}...HEAD
+            `;
+
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: version,
+              name: `发布 ${version}`,
+              body: releaseBody,
+              draft: false,
+              prerelease: version.includes('-')
+            });

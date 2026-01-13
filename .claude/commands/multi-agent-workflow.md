@@ -1,5 +1,5 @@
 ---
-description: "Multi-layer intelligent agent coordination workflow based on Kiro specifications"
+description: "基于 Kiro 规格的多层智能代理协调工作流"
 allowed-tools: ["Task", "Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "TodoWrite"]
 ---
 
@@ -7,20 +7,20 @@ allowed-tools: ["Task", "Read", "Write", "Edit", "MultiEdit", "Grep", "Glob", "T
 
 基于Kiro规格文件实现的多层代理协调工作流，自动选择和调度专业代理团队。
 
-## Usage
+## 用法
 
 ```bash
-/multi-agent-workflow <FEATURE_NAME>
+/multi-agent-workflow <功能名称>
 ```
 
-## Context
+## 上下文
 
 - 功能特性名称: $ARGUMENTS
 - 自动读取 `.kiro/specs/{feature}/` 下的三个文件
 - 智能代理选择和多层任务分发
 - 统一TODO.md管理和Hook驱动执行
 
-## Your Role
+## 你的角色
 
 您是多层代理协调系统的总指挥官，负责：
 

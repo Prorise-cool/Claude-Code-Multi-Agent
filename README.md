@@ -1,826 +1,1190 @@
-# 多层智能代理协调系统
+# 🤖 Claude Code Multi-Agent
 
-> **Context Engineering 驱动的新一代AI编程助手生态系统**\
-> 基于Claude Code构建的智能代理协调平台，实现从需求到交付的全流程自动化开发
+<div align="center">
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-Latest-blue)](https://claude.ai)
-[![Context Engineering](https://img.shields.io/badge/Context%20Engineering-Powered-green)](https://github.com/coleam00/context-engineering-intro)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Ollama](https://img.shields.io/badge/Ollama-gemma3:1b-green.svg)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-## 🎯 项目概述
+**纯提示词驱动的智能多代理开发框架**
 
-这是一个基于ContextEngineering理念构建的多层智能代理协调系统，通过100+个专业AI代理（全汉化）的协作，实现从项目需求分析到最终交付的全自动化开发流程。系统采用三层架构设计，结合Hook驱动的自动化机制，能够智能地选择和协调不同专业领域的代理，确保高质量的软件交付。
+通过 Ollama 实现项目检测、意图分析、技能推荐的零硬编码协作系统
 
+[快速开始](#快速开始) · [文档](./project_document) · [示例](#使用示例) · [贡献指南](#贡献)
 
-
-### 🤔 为什么需要它？
-
-你是否厌倦了反复编写和调试 `prompt`，却只能让AI完成零散的任务？`Claude-Code-Multi-Agent` 将这一切自动化！你只需提出需求，系统就能像一个全能的技术团队，协调100多位不同领域的AI专家（代理），自主完成需求分析、架构设计、编码、测试和交付。
-
-- **Before**: `claude "请用 express 写一个返回 'hello world' 的服务器"` (得到一堆代码)
-- **After**: `claude /agent-workflow "创建一个返回 'hello world' 的 Express 服务器"` (AI自主创建文件、写入代码、安装依赖、完成任务)
-
->在这期间一切都是**可控**的，每一个任务的节点都会提供及时反馈！
-
-
-
-### 🧐 什么是上下文工程？
-
-它代表了从传统“提示工程”到“系统化AI指导”的范式转变。
-
-| 维度 | ❌ 提示工程 (Prompt Engineering) | ✅ **上下文工程 (Context Engineering)** |
-| :--- | :--- | :--- |
-| **范围** | 专注于巧妙的措辞和短语 | 提供包含背景信息的 **完整系统** |
-| **内容** | 通常是单次任务的指令 | 包括文档、示例、规则、模式和验证 |
-| **比喻** | 像是给AI一张 **便利贴** | 像是给AI一本包含所有细节的 **完整剧本** |
-| **效果** | AI容易出错或偏离轨道 | AI能够自我纠正，实现复杂、可靠的端到端任务 |
-
-**一言蔽之**：与其绞尽脑汁想一个完美的“提示”，不如为AI提供一个完美的“上下文环境”。这正是本项目正在做的事情。
+</div>
 
 ---
 
+## ✨ 核心特性
 
+- 🧠 **Ollama 智能引擎** - 所有判断逻辑通过提示词完成，无硬编码规则
+- 📝 **自动文档维护** - 代码修改后自动生成文档更新提示
+- 🎯 **智能意图分析** - 判断需求复杂度，推荐合适的 MCP 工具
+- 🔌 **Skills 自动发现** - 会话启动时扫描技能目录，动态加载能力
+- 🔄 **Git 工作流集成** - 自动检测仓库配置，提示分支策略
+- ⚡ **零配置启动** - 基于 uv 的依赖管理，无需手动安装 Python 包
 
-## 🚀 快速上手 (5分钟入门)
+>TIPS：这不是一个插件生态，这是一个Claude Code的专属工作文件空间，您需要将仓库克隆后，将您的项目（或初始化项目）在此文件夹中，享受智能Hooks定义以及 300 + Skills方案
 
-只需四步，即可体验AI自动化编程的强大之处。
+![一句话生成的成品](https://prorise-blog.oss-cn-guangzhou.aliyuncs.com/cover/958b905ca7fdb53b9e035f47a028ebd7.png)![实际运行页面](https://prorise-blog.oss-cn-guangzhou.aliyuncs.com/cover/6117a44f-f5cc-49dd-b018-0156b53615da.png)
 
-### 1. 环境准备
+---
 
-请确保你的电脑上已安装以下软件：
+## 🚀 快速开始
 
-- [Claude Code](https://claude.ai/code) (核心平台)
-- [Git](https://git-scm.com/)
-- [Node.js (LTS)](https://nodejs.org/en/)
+### 前置依赖
 
+本项目依赖两个核心工具，虽然标注为"可选"，但**强烈建议安装**以获得完整体验：
 
+#### 1. Ollama（智能引擎核心）
 
-### 2. 下载并进入项目
+**为什么需要 Ollama？**
 
-打开终端，克隆本项目到本地。
+Ollama 是本项目的"大脑"，负责：
+- **项目类型检测**：自动识别你的项目是 Python/Node.js/Java 等
+- **意图分析**：理解用户输入，判断是简单查询还是复杂任务
+- **提示词优化**：将模糊需求转化为清晰的执行计划
+- **技能推荐**：根据任务类型推荐合适的 Skills
 
-```
-git clone https://github.com/your-repo/Claude-Code-Multi-Agent.git
-cd Claude-Code-Multi-Agent
-```
+没有 Ollama，系统会降级到基础模式（仅支持手动触发 Skills）。
 
-
-
-### 3. 核心配置 (MCP)
-
-> **这是什么？** MCP让AI代理拥有与外部世界交互的能力（如控制浏览器、长期记忆等）。这是实现真正自动化的关键。
-
-请针对于您自己的系统，安装对应的MCP（除`mcp-feedback-enhanced`）其他非必需，MCP安装方法由于各系统各不相同，这里不过多赘述
-
-### 🛠️ **核心MCP服务解析**
-
-| MCP服务器                             | 主要功能                                                     |
-| :------------------------------------ | :----------------------------------------------------------- |
-| **`playwright-mcp`**                  | **浏览器自动化**: 授权代理通过Playwright控制浏览器，执行网页交互、端到端测试和数据抓取。 |
-| **`memory`**                          | **长期记忆**: 提供一个持久化存储，让代理能够跨会话记住关键信息、上下文和用户偏好。 |
-| **`sequential-thinking`**             | **顺序思维增强**: 引导代理进行更结构化、逻辑化的思考，将复杂问题分解为有序步骤。 |
-| **`mcp-feedback-enhanced(交互核心)`** | **增强反馈循环**: 建立一个交互式反馈机制，允许用户在任务执行过程中进行干预和指导。 |
-| **`browsermcp`**                      | **通用浏览器控制**: 提供一个轻量级的浏览器交互接口。         |
-| **`shrimp-task-manager`**             | **任务管理**: 一个专用的任务管理服务，用于更精细地跟踪和控制自动化任务的执行状态。 |
-
-> **注意**：
->
->   * 启用这些MCP服务可能需要在您的本地环境中安装相应的依赖，例如 **Node.js (用于 `npx`)** 和 **Python**。
->   * 部分服务如 `playwright-mcp` 在首次运行时会自动下载浏览器驱动，请确保您的网络连接正常。
-
-
-
-### 4. 运行你的第一个自动化工作流！
-
-现在，在 `Claude Code` 中打开本项目，并执行你的第一个指令：
-
-```Bash
-/agent-workflow "创建一个名为 app.js 的文件，并写入一个简单的 Express 服务器代码，监听3000端口，返回 'Hello, Multi-Agent!'"
-```
-
-恭喜！你已经成功启动了第一个AI工作流。观察AI如何像真人一样分析你的需求、创建文件、编写代码并报告任务完成
-
->**⚠️注意:**/agent-workflow还不是最强的命令执行流程，下方，我还会介绍更强的工作流命令
-
-
-
-### ⚠️ **重要成本提醒**
-
-**Token消耗极快：构建一个完整的项目从文档到成品，大约要使用$10美元的token**
-
-这个系统在处理复杂项目时会消耗大量的Claude API token，特别是在以下场景：
-
-- 多代理并行协作时的上下文传递
-- 大型代码库的分析和重构
-- 复杂架构设计的迭代优化
-- 全面的测试套件生成和验证
-
-建议在使用前：
-
-1. 设置合理的token使用限制
-2. 优先处理关键功能模块
-3. 合理根据自身需求使用不同复杂度的工作流
-
-
-
-🎯 核心使用场景
-
-✨ **第一步：我该选择哪个工作流？(项目复杂度评估)**
-
-面对不同任务，选择合适的工作流至关重要。如果你不确定任务的复杂度，可以让AI帮你分析！
-
-**调用“总协调器” `@spec-orchestrator` 来获取建议**：
+**安装方法：**
 
 ```bash
-@spec-orchestrator 请帮我分析一下以下需求的复杂度，并推荐最合适的工作流。
-我的需求是：“为我现有的Vue项目中添加一个带数据筛选和分页功能的表格组件。”
+# Windows
+winget install Ollama.Ollama
+
+# macOS
+brew install ollama
+
+# Linux
+curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-AI会分析你的需求，给出一个复杂度评分，并明确告诉你应该使用 `/agent-workflow` 还是 `/kiro/spec` 等指令。
-
-
-
-✨ **场景一：在已有项目中添加新功能**
-
-这是最常见的需求。流程如下：
-
-将个人的项目移动至本仓库的根目录
-
-**提出想法，生成规格**：使用 `/kiro/spec` 让AI为你规划
+**下载推荐模型：**
 
 ```bash
-/kiro:spec "在我现有的CRM系统中，增加一个客户跟进记录模块。"
+# gemma3:1b - 轻量级模型，适合日常开发（推荐）
+ollama pull gemma3:1b
+
+# 可选：更强大的模型
+ollama pull llama3.2:3b  # 更高准确率，但速度稍慢
 ```
 
-AI会生成需求、设计、任务列表等 `spec` 文件。
+> 📖 **详细配置教程**：[Ollama 配置指南](./project_document/tutorial-ollama-setup.md)
 
-**（可选）微调规格**：你可以打开 `kiro/specs/` 目录下的文档，对AI的规划进行微调，确保它完全符合你的想法。
+---
 
-**启动开发**：让AI根据规划好的蓝图开始工作。
+#### 2. uv（Python 依赖管理）
+
+**为什么需要 uv？**
+
+uv 是 Rust 编写的超快 Python 包管理器，本项目用它来：
+- **自动管理 Python 环境**：无需手动创建虚拟环境
+- **秒级安装依赖**：比 pip 快 10-100 倍
+- **零配置运行 Hooks**：`uv run` 自动处理依赖隔离
+
+没有 uv，你需要手动安装所有 Python 依赖（`requests`、`python-dotenv` 等），并管理虚拟环境。
+
+**安装方法：**
 
 ```bash
-/agent-workflow "根据 kiro/specs/customer-follow-up-module.md 的规划，开始实现该功能。"
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-
-
-**场景二：从零开始一个新项目**
-
-当你只有一个模糊的想法时，这个流程最适合。
+**验证安装：**
 
 ```bash
-/kiro/spec "我想做一个在线的Markdown笔记应用"
+uv --version
+# 输出：uv 0.x.x
 ```
 
-**执行蓝图**:
+> 💡 **为什么不用 pip？** uv 会自动创建隔离环境，避免污染全局 Python 环境，且速度快 10 倍以上。
+
+---
+
+### 安装步骤
+
+**1. 克隆项目**
 
 ```bash
-/multi-agent-workflow [/kiro/spec/markdown_app]   <- 直接粘贴文件路径或@文件
+git clone https://github.com/Prorise-cool/claude-code-multi-agent.git
+cd claude-code-multi-agent
 ```
 
+**2. 配置环境变量**
 
+```bash
+cp .env.example .env
+```
 
+编辑 `.env` 文件：
 
+```bash
+# Ollama 模型配置
+OLLAMA_MODEL=gemma3:1b
+
+# TTS 语音播报（可选）
+HOOKS_TTS_ENABLED=false
+HOOKS_TTS_PROVIDER=pyttsx3
+```
+
+**3. 启动 Claude Code**
+
+打开项目目录，Hooks 系统会自动初始化：
+
+```bash
+# 如果使用 Claude Desktop
+# 直接打开项目文件夹
+
+# 如果使用 VS Code + Claude 扩展
+code .
+```
+
+首次启动时，`SessionStart` Hook 会自动：
+- 检测项目类型（通过 Ollama）
+- 扫描并加载所有 Skills
+- 初始化文档系统（`DEVELOPMENT.md`、`KNOWLEDGE.md`、`CHANGELOG.md`）
+- 检查 Git 配置
+
+---
+
+## 📖 使用示例
+
+### Commands：执行工作流
+
+Commands 是预定义的工作流，通过 `/command-name` 触发：
+
+```bash
+# 创建功能规格（从需求到实施计划）
+/kiro/spec 用户认证功能
+
+# 执行完整的代理工作流
+/agent-workflow 实现博客系统
+
+# Git 提交（自动生成 Commit Message）
+/gh/commit
+```
+
+**Command 示例：`/kiro/spec`**
+
+这个 Command 会引导你完成：
+1. **需求收集**：生成 EARS 格式的需求文档
+2. **设计文档**：创建架构设计和数据模型
+3. **任务列表**：拆解为可执行的开发任务
+
+所有文档自动保存到 `.kiro/specs/{feature_name}/` 目录。
+
+> 📖 **详细说明**：查看 [`.claude/commands/kiro/spec.md`](./.claude/commands/kiro/spec.md)
+
+---
+
+### Skills：调用专家智能体
+
+Skills 是专业领域的智能体，通过 `/skill-name` 触发：
+
+```bash
+# 后端开发专家
+/backend-specialist 设计 RESTful API
+
+# 测试专家
+/testing-specialist 为 UserService 编写单元测试
+
+# 安全专家
+/security-specialist 审计认证模块的安全性
+
+# 数据库优化专家
+/database-optimizer 分析慢查询并优化索引
+```
+
+**Skill 工作原理：**
+
+1. 你输入 `/backend-specialist 设计 RESTful API`
+2. 系统读取 `.claude/skills/backend-specialist/SKILL.md`
+3. 将 Skill 的能力描述注入到 Claude 的系统提示中
+4. Claude 以"后端专家"的身份回答你的问题
+
+每个 Skill 都包含：
+- **能力描述**：这个专家擅长什么
+- **使用场景**：什么时候调用它
+- **参考文档**：详细的技术规范（如 Django/FastAPI 最佳实践）
+
+> 📖 **Skill 开发指南**：查看 [Skills 机制](#skills-触发机制)
+
+---
 
 ## 🏗️ 系统架构
 
-### 三层代理架构
+### Hooks 工作原理
+
+本项目通过 Python Hooks 系统管理 Claude Code 的会话生命周期。每个 Hook 在特定事件触发时执行，通过 Ollama 进行智能决策。
+
+**核心设计理念：**
+- ✅ **文档驱动**：强制维护三个核心文档（DEVELOPMENT.md、KNOWLEDGE.md、CHANGELOG.md），会话启动时自动读取并注入上下文
+- ✅ **配置化提示词**：所有提示词模板存储在 `.claude/hooks/prompts.json`，用户可自由调整和优化
+- ✅ **去 Memory 中间层**：不再依赖 Memory MCP，直接通过文档维护项目知识，避免上下文爆炸导致的指令失效
+
+#### Hook 触发时机
 
 ```mermaid
-graph TB
-    subgraph "第一层：总协调器"
-        SO[spec-orchestrator<br/>总指挥官]
-    end
-    
-    subgraph "第二层：领域专家主管 (9个Specialists)"
-        SA[spec-analyst<br/>需求分析主管]
-        SAR[spec-architect<br/>系统架构主管]
-        SP[spec-planner<br/>实施规划主管]
-        SD[spec-developer<br/>开发实施主管]
-        SR[spec-reviewer<br/>代码审查主管]
-        SV[spec-validator<br/>质量验证主管]
-        ST[spec-tester<br/>测试专家主管]
-        STR[spec-task-reviewer<br/>任务监督主管]
-    end
-    
-    subgraph "第三层：专业执行代理 (100+个)"
-        ENG[Engineering<br/>工程代理]
-        DB[Databases<br/>数据库代理]
-        DES[Design<br/>设计代理]
-        TEST[Testing<br/>测试代理]
-        DEP[Deployment<br/>部署代理]
-        MKT[Marketing<br/>营销代理]
-        PROD[Product<br/>产品代理]
-        OPS[Operations<br/>运营代理]
-    end
-    
-    SO --> SA
-    SO --> SAR
-    SO --> SP
-    SO --> SD
-    SO --> SR
-    SO --> SV
-    SO --> ST
-    SO --> STR
-    
-    SA --> PROD
-    SA --> MKT
-    SAR --> ENG
-    SAR --> DB
-    SP --> OPS
-    SD --> ENG
-    SR --> ENG
-    SV --> TEST
-    SV --> DEP
-    ST --> TEST
-    STR --> OPS
+graph LR
+    A[会话启动] --> B[SessionStart]
+    B --> C[用户输入]
+    C --> D[UserPromptSubmit]
+    D --> E[工具调用]
+    E --> F[PreToolUse]
+    F --> G[PostToolUse]
+    C --> H[Notification]
+    C --> I[PreCompact]
+    C --> J[Stop/SubagentStop]
 ```
 
-## 📂 核心Agent目录结构
+#### Hook 执行流程
 
-```
-# 目录结构
-📦 agents                 # 顶层代理目录，包含所有不同类型的AI代理
-    ├── 📄 auto-task-executor.js    # 自动任务执行器，用于自动化执行特定任务的脚本或配置
-    ├── 📄 directory_tree.md        # 目录结构文档，描述整个代理目录的组织方式
-    └── 📄 task-execution-agent.js  # 任务执行代理，负责接收并处理任务执行指令
-    ├── 📂 bonus              # 额外代理目录，包含一些特殊或辅助性的代理
-        ├── 📄 joker.md             # 小丑代理，可能用于生成幽默内容或进行非常规操作
-        └── 📄 studio-coach.md      # 工作室教练代理，可能用于提供指导或培训
-    ├── 📂 core               # 核心代理目录，包含提供基础或通用功能的代理
-        ├── 📄 code-archaeologist.md  # 代码考古学家代理，用于分析和理解遗留代码
-        ├── 📄 code-reviewer.md       # 代码审查代理，用于检查代码质量和发现潜在问题
-        ├── 📄 documentation-specialist.md # 文档专家代理，用于生成和维护项目文档
-        └── 📄 performance-optimizer.md # 性能优化器代理，用于分析和提升系统性能
-    ├── 📂 databases          # 数据库代理目录，包含与数据库操作相关的代理
-        ├── 📄 customer-support.md    # 客户支持代理，可能与用户数据或支持系统数据库交互
-        ├── 📄 data-engineer.md       # 数据工程师代理，用于数据管道、ETL等操作
-        ├── 📄 data-scientist.md      # 数据科学家代理，用于数据分析和模型训练
-        ├── 📄 database-admin.md      # 数据库管理员代理，用于管理数据库操作和维护
-        └── 📄 database-optimizer.md  # 数据库优化器代理，用于优化数据库查询和结构
-    ├── 📂 deployment         # 部署代理目录，包含与软件部署和运维相关的代理
-        ├── 📄 debugger.md            # 调试器代理，用于识别和修复代码中的错误
-        ├── 📄 deployment-engineer.md # 部署工程师代理，负责自动化部署流程
-        ├── 📄 devops-troubleshooter.md # DevOps 故障排除代理，用于诊断和解决运维问题
-        ├── 📄 dx-optimizer.md        # 开发者体验优化代理，旨在提升开发效率和体验
-        ├── 📄 error-detective.md     # 错误侦探代理，用于日志分析和错误模式识别
-        ├── 📄 legacy-modernizer.md   # 遗留系统现代化代理，用于重构和升级旧系统
-        ├── 📄 network-engineer.md    # 网络工程师代理，用于网络配置、故障排除和优化
-        ├── 📄 payment-integration.md # 支付集成代理，用于处理支付系统相关的任务
-        ├── 📄 performance-engineer.md # 性能工程师代理，用于应用性能优化和可伸缩性
-        ├── 📄 prompt-engineer.md     # 提示工程师代理，用于设计和优化AI提示
-        ├── 📄 quant-analyst.md       # 量化分析师代理，可能用于金融或数据量化分析
-        ├── 📄 refactor-agent.md      # 重构代理，用于改进代码结构而不改变功能
-        ├── 📄 risk-manager.md        # 风险管理器代理，用于识别、评估和缓解项目风险
-        ├── 📄 sales-automator.md     # 销售自动化代理，用于自动化销售流程和营销活动
-        ├── 📄 search-specialist.md   # 搜索专家代理，可能用于优化搜索功能或内容索引
-        └── 📄 security-auditor.md    # 安全审计师代理，用于审查代码安全性和合规性
-    ├── 📂 design             # 设计代理目录，包含与产品设计相关的代理
-        ├── 📄 brand-guardian.md      # 品牌守护者代理，确保产品符合品牌指南
-        ├── 📄 ui-designer.md         # UI 设计师代理，专注于用户界面视觉设计
-        ├── 📄 ui-ux-master.md        # UI/UX 大师代理，提供全面的用户体验和界面设计
-        ├── 📄 ux-researcher.md       # UX 研究员代理，专注于用户研究和需求分析
-        ├── 📄 visual-storyteller.md  # 视觉故事讲述者代理，用于创建引人入胜的视觉叙事
-        └── 📄 whimsy-injector.md     # 奇思妙想注入器代理，可能用于增加创意或趣味性元素
-    ├── 📂 engineering        # 工程代理目录，包含通用工程领域的代理
-        ├── 📂 backend            # 后端代理目录
-            ├── 📄 ai-engineer.md         # AI 工程师代理，专注于AI模型和服务的后端实现
-            ├── 📄 backend-architect.md   # 后端架构师代理，负责后端系统设计
-            └── 📄 senior-backend-architect.md # 高级后端架构师代理，提供高级后端架构指导
-        ├── 📂 frontend           # 前端代理目录
-            ├── 📄 frontend-developer.md  # 前端开发代理，专注于前端代码实现
-            ├── 📄 mobile-app-builder.md  # 移动应用构建器代理，用于开发移动应用程序
-            ├── 📄 rapid-prototyper.md  # 快速原型开发代理，用于迅速构建功能原型
-            └── 📄 senior-frontend-architect.md # 高级前端架构师代理，提供高级前端架构指导
-        └── 📂 middlend           # 中间层代理目录，可能包含一些跨前后端的通用服务或工具
-            ├── 📄 api-documenter.md      # API 文档编写代理，用于生成和维护API文档
-            ├── 📄 architect-review.md    # 架构审查代理，用于评审系统架构
-            ├── 📄 cloud-architect.md     # 云架构师代理，负责云平台架构设计和优化
-            ├── 📄 code-reviewer.md       # 代码审查代理（通用，可能与 core/code-reviewer.md 功能重叠或更侧重于特定方面）
-            └── 📄 devops-automator.md    # DevOps 自动化代理，用于自动化运维流程
-    ├── 📂 marketing          # 市场营销代理目录，包含与市场推广相关的代理
-        ├── 📄 app-store-optimizer.md # 应用商店优化代理，用于提升应用在应用商店的可见性
-        ├── 📄 business-analyst.md    # 业务分析师代理，用于分析业务需求和市场趋势
-        ├── 📄 content-creator.md     # 内容创作者代理，用于生成营销内容
-        ├── 📄 growth-hacker.md       # 增长黑客代理，专注于通过实验和策略实现用户增长
-        ├── 📄 instagram-curator.md   # Instagram 内容策展代理，用于管理和优化 Instagram 内容
-        ├── 📄 reddit-community-builder.md # Reddit 社区建设代理，用于在 Reddit 上建立和管理社区
-        ├── 📄 tiktok-strategist.md   # TikTok 策略师代理，用于制定和执行 TikTok 营销策略
-        └── 📄 twitter-engager.md     # Twitter 互动代理，用于在 Twitter 上进行互动和内容发布
-    ├── 📂 orchestrators      # 编排器代理目录，包含用于协调和管理其他代理的代理
-        ├── 📄 context-manager.md     # 上下文管理器代理，用于管理和维护会话或项目上下文
-        ├── 📄 project-analyst.md     # 项目分析师代理，用于对项目进行初始分析和评估
-        ├── 📄 team-configurator.md   # 团队配置器代理，用于设置和管理代理团队
-        └── 📄 tech-lead-orchestrator.md # 技术主管编排器代理，作为高级协调者管理整个开发流程
-    ├── 📂 product            # 产品代理目录，包含与产品管理相关的代理
-        ├── 📄 feedback-synthesizer.md # 反馈合成器代理，用于收集和分析用户反馈
-        ├── 📄 sprint-prioritizer.md  # Sprint 优先级排序代理，用于确定开发迭代中的任务优先级
-        └── 📄 trend-researcher.md    # 趋势研究员代理，用于分析市场趋势和用户行为
-    ├── 📂 project-management # 项目管理代理目录，包含与项目管理相关的代理
-        ├── 📄 experiment-tracker.md  # 实验跟踪器代理，用于跟踪和分析实验结果
-        ├── 📄 project-shipper.md     # 项目发布代理，负责项目的最终交付和发布
-        └── 📄 studio-producer.md     # 工作室制作人代理，可能用于协调多媒体或内容制作项目
-    ├── 📂 specialist         # 专家代理目录，包含一些在特定领域具有深度专业知识的代理
-        ├── 📄 spec-analyst.md        # 规范分析师代理，用于需求获取和规范文档编写
-        ├── 📄 spec-architect.md      # 规范架构师代理，根据规范进行系统架构设计
-        ├── 📄 spec-developer.md      # 规范开发代理，根据详细规范进行代码实现
-        ├── 📄 spec-orchestrator.md   # 规范编排器代理，协调基于规范的开发流程
-        ├── 📄 spec-planner.md        # 规范规划代理，将设计分解为可执行任务
-        ├── 📄 spec-reviewer.md       # 规范审查代理，审查代码和设计是否符合规范
-        ├── 📄 spec-task-reviewer.md  # 规范任务审查代理，验证开发任务的完成情况
-        ├── 📄 spec-tester.md         # 规范测试代理，创建和执行测试套件以验证规范
-        └── 📄 spec-validator.md      # 规范验证代理，进行最终质量验证以确保符合所有规范和生产就绪
-    ├── 📂 specialized        # 专业化代理目录，包含按编程语言的框架....在这里可以添加您的编程语言规范，这里仅提供了一些模板
-        ├── 📂 C++                # C++ 语言专家代理
-            └── 📄 cpp-pro.md           # C++ 编程专家代理
-        ├── 📂 databases          # 数据库专业代理 (可能与顶层 databases 目录下的代理功能互补)
-            └── 📄 sql-pro.md           # SQL 编程和优化专家代理
-        ├── 📂 django             # Django 框架专家代理
-            ├── 📄 django-api-developer.md # Django API 开发代理
-            ├── 📄 django-backend-expert.md # Django 后端专家代理
-            └── 📄 django-orm-expert.md # Django ORM 专家代理
-        ├── 📂 Golang             # Go 语言专家代理
-            └── 📄 golang-pro.md        # Go 语言编程专家代理
-        ├── 📂 JavaScript         # JavaScript 语言专家代理
-            └── 📄 javascript-pro.md    # JavaScript 编程专家代理
-        ├── 📂 laravel            # Laravel 框架专家代理
-            ├── 📄 laravel-backend-expert.md # Laravel 后端专家代理
-            └── 📄 laravel-eloquent-expert.md # Laravel Eloquent ORM 专家代理
-        ├── 📂 Python             # Python 语言专家代理
-            └── 📄 python-pro.md        # Python 编程专家代理
-        ├── 📂 rails              # Ruby on Rails 框架专家代理
-            ├── 📄 rails-activerecord-expert.md # Rails ActiveRecord 专家代理
-            ├── 📄 rails-api-developer.md # Rails API 开发代理
-            └── 📄 rails-backend-expert.md # Rails 后端专家代理
-        ├── 📂 react              # React 框架专家代理
-            ├── 📄 react-component-architect.md # React 组件架构师代理
-            └── 📄 react-nextjs-expert.md # React Next.js 专家代理
-        └── 📂 vue                # Vue.js 框架专家代理
-            ├── 📄 vue-component-architect.md # Vue 组件架构师代理
-            ├── 📄 vue-nuxt-expert.md   # Vue Nuxt.js 专家代理
-            └── 📄 vue-state-manager.md # Vue 状态管理专家代理
-    ├── 📂 studio-operations  # 工作室运营代理目录，包含与日常运营相关的代理
-        ├── 📄 analytics-reporter.md  # 分析报告代理，用于生成数据分析报告
-        ├── 📄 finance-tracker.md     # 财务跟踪代理，用于管理和跟踪财务数据
-        ├── 📄 infrastructure-maintainer.md # 基础设施维护代理，用于维护IT基础设施
-        ├── 📄 legal-compliance-checker.md # 法律合规性检查代理，确保符合法律法规
-        └── 📄 support-responder.md   # 支持响应代理，用于处理用户支持请求
-    ├── 📂 testing            # 测试代理目录，包含与软件测试相关的代理
-        ├── 📄 api-tester.md          # API 测试代理，专注于API接口测试
-        ├── 📄 integration-test-fixer.md # 集成测试修复代理，用于修复集成测试中发现的问题
-        ├── 📄 performance-benchmarker.md # 性能基准测试代理，用于设定和执行性能基准测试
-        ├── 📄 test-automator.md      # 测试自动化代理，用于创建和管理自动化测试
-        ├── 📄 test-results-analyzer.md # 测试结果分析代理，用于分析测试报告
-        ├── 📄 test-writer-fixer.md   # 测试编写和修复代理，用于编写和修复测试用例
-        ├── 📄 tool-evaluator.md      # 工具评估代理，用于评估和选择开发工具
-        └── 📄 workflow-optimizer.md  # 工作流优化代理，用于优化开发和测试流程
-    └── 📂 universal          # 通用代理目录，包含不特定于某个技术栈的通用代理
-        ├── 📄 api-architect.md       # API 架构师代理，设计通用API结构
-        ├── 📄 backend-developer.md   # 后端开发代理（通用）
-        ├── 📄 frontend-developer.md  # 前端开发代理（通用）
-        └── 📄 tailwind-css-expert.md # Tailwind CSS 专家代理，专注于CSS框架
+每个 Hook 通过 `exit_code` 控制后续操作：
+
+```mermaid
+flowchart TD
+    A[Hook 触发] --> B[执行脚本]
+    B --> C{exit_code}
+    C -->|0| D[继续操作]
+    C -->|2| E[阻止操作]
+    D --> F[返回 JSON]
+    E --> F
+    F --> G[更新系统消息]
 ```
 
-
-
-### 🧩 上下文工程的核心组件
-
-一个优秀的上下文环境由以下几个关键部分组成，这套模板也体现了这些思想：
-
-* `CLAUDE.md`: **全局规则手册**。这是AI在项目中必须遵守的最高行为准则，比如代码风格、测试要求、文件结构等。
-* `examples/` 或 `agents/`: **最佳实践案例库**。AI通过学习这些示例代码来理解您的项目模式和架构风格。**在本工程中，庞大的 `agents/` 目录本身就是AI学习和模仿的最佳案例库**。
-* `INITIAL.md`: **初始需求描述**。这是您对一个功能的初步想法和要求。**在本工程中，这对应于您提供给 `/kiro/spec` 或 `/agent-workflow` 指令的初始文字描述**。
-* `PRPs/` (产品需求提示): **综合性实施蓝图**。这是一个由AI生成的、极其详细的技术实现方案，包含了上下文、步骤、验证等。**在本工程中，这对应于 `/kiro/spec` 指令所生成的系列规格文档，您可以根据自身公司的需求或您想要的模板进行汉化或是调整**
-
----
-
-### 🚀 核心工作流：从想法到实现
-
-上下文工程将软件开发流程化、自动化。以下是标准流程，它与您使用本项目指令的流程高度一致。
-
-#### **第1步：定义全局规则 (编辑 `CLAUDE.md`)**
-
-这是您为整个项目设定的“法律”。一个好的 `CLAUDE.md` 文件应包含：
-* **项目意识**：要求AI在行动前先阅读规划文档、检查现有代码。
-* **代码规范**：如文件大小限制、模块化组织方式。
-* **测试要求**：如单元测试的风格、代码覆盖率目标。
-* **文档标准**：如注释和文档字符串的格式。
-
-> 您可以根据您的团队规范，自由定制此文件。
-
-#### **第2步：创建初始功能请求**
-这是您与AI协作的起点。一个高质量的初始请求应包含：
-* **功能描述**：明确、具体地描述您想构建什么。
-    * `❌ 坏例子`: “构建一个爬虫”
-    * `✅ 好例子`: “构建一个使用 `BeautifulSoup` 的异步网络爬虫，用于抓取电商网站的产品数据，能处理速率限制，并将结果存入PostgreSQL数据库。”
-* **代码示例**：告诉AI应该参考哪些现有代码模式。
-* **相关文档**：提供API文档链接、数据库结构图等。
-* **其他考量**：提及任何特殊要求、常见的坑或性能指标。
-
-#### **第3步：生成实施蓝图 (PRP)**
-
-拿到您的初始请求后，AI会进入研究和规划阶段。
-* **对应指令**：**这对应于本项目的 `/kiro/spec` 或 `/generate-prp` 指令。**
-
-这个过程会：
-1.  **研究分析**: AI会分析您的代码库、寻找相似实现、确认代码惯例。
-2.  **整合文档**: AI会抓取您提供的链接中的关键信息。
-3.  **创建蓝图**: AI会生成一份详细的、带验证步骤的实施计划（即PRP或规格文档），并存放在 `PRPs/` 或 `kiro/specs/` 目录下。
-
-#### **第4步：执行蓝图**
-万事俱备，现在让AI开始编码。
-* **对应指令**：**这对应于本项目的 `/agent-workflow` 或 `/execute-prp` 指令。**
-
-AI会严格按照蓝图执行：
-1.  **加载上下文**: 读取完整的PRP蓝图。
-2.  **制定计划**: 创建详细的子任务列表。
-3.  **执行与验证**: 实现每个功能点，并运行测试或验证命令来确保正确性。
-4.  **迭代修复**: 如果验证失败，AI会尝试自我修复，直到所有检查通过。
-5.  **完成任务**: 确保所有成功标准都已满足。
-
----
-
-### ⭐ 最佳实践
-
-1.  **初始请求要明确**
-    不要假设AI懂你。明确提出你的要求、限制和偏好，并大量引用 `examples/` 或 `agents/` 中的案例。
-
-2.  **提供全面的示例**
-    案例库是AI学习的食粮。提供越多的高质量示例，AI生成的代码就越符合你的期望。不仅要展示“做什么”，有时也要展示“不做什么”（如错误处理模式）。
-
-3.  **利用验证关卡**
-    在你的实现蓝图（PRP）中可以包含必须通过的测试命令或lint检查。这会强制AI进行自我修正，确保它一次性交付可用的代码。
-
-4.  **善用外部文档**
-    不要吝啬提供API文档、库指南或相关的Stack Overflow链接。你提供的信息越多，AI就越不需要去“猜测”。
-
-5.  **不断完善 `CLAUDE.md`**
-    每当AI犯了一个你不想让它再犯的错误时，就考虑将相关的规则添加到 `CLAUDE.md` 中。这是一个持续进化的过程。
-
-
-
-## 🔧 核心指令系统
-
-### 🚀 主要工作流指令
-
-#### 1. `/generate-prp` - PRP需求文档生成
-
-**用途**：基于初步需求生成详细的产品需求提示文档
-
-```bash
-/generate-prp INITIAL.md
-```
-
-**功能**：
-
-- 深度分析功能需求
-- 研究技术实现方案
-- 生成全面的PRP文档
-- 包含验证循环和质量标准
-
-#### 2. `/execute-prp` - PRP执行工作流
-
-**用途**：根据PRP文档自动实现功能
-
-```bash
-/execute-prp PRPs/your-feature-name.md
-```
-
-**功能**：
-
-- 解析PRP需求和规范
-- 创建详细实施计划
-- 逐步执行代码实现
-- 运行验证和测试
-
-#### 3. `/agent-workflow` - 中等难度自动化工作流
-
-**用途**：处理中等复杂度的功能开发
-
-```bash
-/agent-workflow <功能描述>
-```
-
-**执行流程**：
-
-```
-spec-analyst → spec-architect → spec-developer → spec-validator → spec-tester
-     ↓              ↓              ↓              ↓              ↓
-  需求分析        系统架构        代码实现        质量验证        测试验证
-```
-
-**质量门控**：达到95%质量分数才继续下一阶段
-
-#### 4. `/multi-agent-workflow` - 高难度复杂重构工作流
-
-**用途**：处理复杂的系统重构和大型功能开发
-
-```bash
-/multi-agent-workflow <功能名称>
-```
-
-**三层协调架构**：
-
-1. **spec-orchestrator** - 总协调，智能选择代理团队
-2. **9个specialist主管** - 领域专家协调和管理
-3. **100+专业代理** - 具体任务执行
-
-### 🎯 Kiro工作流指令
-
-#### 5. `/kiro/spec` - 完整规格创建流程
-
-**用途**：从粗略想法到完整实施规格的迭代流程
-
-```bash
-/kiro:spec <功能想法>
-```
-
-**三阶段流程**：
-
-1. **需求收集** - 生成需求文档并与用户迭代确认
-2. **设计创建** - 基于需求进行技术设计和架构规划
-3. **任务列表** - 将设计分解为可执行的编程任务
-
-#### 6. `/kiro/execute` - 任务执行
-
-**用途**：执行Kiro规格中的具体任务
-
-```bash
-/kiro:execute <功能名称> <任务描述>
-```
-
-### 🧠 思考和分析指令
-
-#### 7. `/think-ultra` - 超级思考模式
-
-**用途**：处理复杂问题的深度分析和解决方案设计
-
-```bash
-/think-ultra <复杂问题描述>
-```
-
-#### 8. `/reflection` - 反思和优化
-
-**用途**：对已完成工作进行反思和改进建议
-
-```bash
-/reflection <要反思的内容>
-```
-
-#### 9. `/eureka` - 技术突破记录
-
-**用途**：记录和文档化技术突破和创新解决方案
-
-```bash
-/eureka <突破描述>
-```
-
-### 🔧 工具和辅助指令
-
-#### 10. `/gh/fix-issue` - GitHub问题修复
-
-**用途**：自动化GitHub问题分析和修复流程
-
-```bash
-/gh:fix-issue <issue-number>
-```
-
-#### 11. `/gh/review-pr` - PR审查
-
-**用途**：代码审查和PR反馈
-
-```bash
-/gh:review-pr <pr-number>
-```
-
-#### 12. `/cc/create-command` - 创建新指令
-
-**用途**：创建自定义Claude Code指令
-
-```bash
-/cc:create-command <指令名称> <描述>
-```
-
-## 🔗 Hook自动化机制
-
-Hook系统实现了基于事件的自动化流程，配置在 `.claude/settings.local.json` 中：
-
-### Hook事件类型
-
-#### 1. **PreToolUse** - 工具使用前触发
+**返回值格式：**
 
 ```json
 {
-    "matcher": "Task",
-    "hooks": [{
-        "type": "command",
-        "command": "node agents/todo-hook-manager.js validate-task-prerequisites",
-        "timeout": 10000
-    }]
+    "exit_code": 0,
+    "message": "操作成功",
+    "data": {
+        "skills": ["backend-specialist", "testing-specialist"],
+        "project_type": "Python",
+        "framework": "FastAPI"
+    }
 }
 ```
 
-**触发场景**：代理任务启动前的前置条件验证
+- `exit_code=0`：允许操作继续
+- `exit_code=2`：阻止操作（如检测到危险命令）
 
-#### 2. **PostToolUse** - 工具使用后触发
+---
 
-```json
-{
-    "matcher": "Edit|MultiEdit|Write",
-    "hooks": [{
-        "type": "command",
-        "command": "node agents/todo-hook-manager.js handle-file-change",
-        "timeout": 30000
-    }]
-}
+#### Hook 类型说明
+
+| Hook | 触发时机 | 核心功能 | Ollama 作用 |
+|------|---------|---------|------------|
+| **SessionStart** | 会话启动 | 项目初始化 | 检测项目类型、推荐 Skills |
+| **UserPromptSubmit** | 用户提交输入 | 意图分析 | 判断任务复杂度、优化提示词 |
+| **PreToolUse** | 工具调用前 | 权限检查 | 评估操作风险 |
+| **PostToolUse** | 工具调用后 | 文档更新 | 生成文档更新建议 |
+| **Stop** | 会话结束 | 清理资源 | - |
+| **SubagentStop** | 子代理停止 | 子任务处理 | - |
+| **PreCompact** | 上下文压缩前 | 信息保留 | 识别重要上下文 |
+| **Notification** | 系统通知 | 消息处理 | - |
+
+**核心 Hook 详解：**
+
+**1. SessionStart - 会话启动处理器**
+
+这是最重要的 Hook，负责项目初始化：
+
+```python
+# .claude/hooks/handlers/session_start.py 的核心逻辑
+
+# 1. 调用 Ollama 检测项目类型
+project_info = ollama_client.detect_project_type()
+# 返回：{"type": "Python", "framework": "FastAPI", "version": "3.11"}
+
+# 2. 扫描 skills/ 目录
+skills = scan_skills_directory()
+# 返回：["backend-specialist", "testing-specialist", ...]
+
+# 3. 初始化文档系统
+document_manager.init_documents()
+# 创建：DEVELOPMENT.md, KNOWLEDGE.md, CHANGELOG.md
+
+# 4. 【核心改进】强制读取三个文档并注入上下文
+development_content = read_file("project_document/DEVELOPMENT.md")
+knowledge_content = read_file("project_document/KNOWLEDGE.md")
+changelog_content = read_file("project_document/CHANGELOG.md")
+# 将这些内容注入到系统上下文中，替代 Memory MCP
+
+# 5. 检查 Git 配置
+git_status = check_git_config()
+# 检查：.gitignore, 分支策略
 ```
 
-**触发场景**：文件编辑完成后的状态更新和任务标记
+**为什么移除 Memory MCP？**
+- Memory MCP 需要显式调用，但大模型在上下文爆炸时会忽略指令
+- 文档直接注入上下文，确保信息始终可用
+- 文档可版本控制，便于团队协作和知识沉淀
 
-#### 3. **SubagentStop** - 子代理停止时触发
+**2. UserPromptSubmit - 意图识别处理器**
 
-```json
+分析用户输入，提供智能建议：
+
+```python
+# 用户输入："帮我实现用户登录功能"
+
+# Ollama 分析结果：
 {
-    "matcher": "*",
-    "hooks": [
-        {
-            "command": "node agents/todo-hook-manager.js handle-task-complete",
-            "timeout": 45000
-        },
-        {
-            "command": "git add . && git commit -m \"Auto-commit: Agent task completed - $(date)\" || true",
-            "timeout": 20000
-        }
+    "intent": "feature_implementation",
+    "complexity": "medium",
+    "recommended_tools": ["Write", "Edit", "Bash"],
+    "recommended_skills": ["backend-specialist", "security-specialist"],
+    "suggested_plan": [
+        "1. 设计数据库表结构",
+        "2. 实现认证逻辑",
+        "3. 编写单元测试",
+        "4. 添加安全防护"
     ]
 }
 ```
 
-**触发场景**：代理任务完成后的自动提交和下一任务触发
+**3. PostToolUse - 工具使用后处理器**
 
-#### 4. **Notification** - 通知事件
+在每次代码修改后，**强制**更新三个文档：
 
-```json
-{
-    "matcher": "",
-    "hooks": [{
-        "command": "node agents/todo-hook-manager.js handle-notification",
-        "timeout": 10000
-    }]
-}
+```python
+# 检测到修改了 user_service.py
+
+# 【强制】必须更新以下文档：
+# 1. DEVELOPMENT.md - 记录开发进度和任务状态
+# 2. KNOWLEDGE.md - 记录技术决策和代码模式
+# 3. CHANGELOG.md - 记录变更历史
+
+# 文档更新提示通过 prompts.json 配置，用户可自定义格式和要求
 ```
 
-#### 5. **Stop** - Claude响应完成
+**提示词配置化：**
+所有提示词模板存储在 `.claude/hooks/prompts.json`，支持：
+- 自定义提示词内容和格式
+- 使用 `{变量}` 占位符动态替换
+- 按 Hook 类型分组管理
+- 便于持续调优和版本控制
 
-```json
-{
-    "matcher": "",
-    "hooks": [
-        {
-            "command": "node agents/todo-hook-manager.js update-stats",
-            "timeout": 15000
-        },
-        {
-            "command": "echo \"$(date): Claude Code session completed\" >> .claude/session.log",
-            "timeout": 5000
-        }
-    ]
-}
-```
+> 📖 **Hook 开发指南**：查看 [`.claude/hooks/core/base_hook.py`](./.claude/hooks/core/base_hook.py)
 
-### Hook自动化流程示例
+---
+
+### Skills 触发机制
+
+Skills 是本项目的"专家团队"，每个 Skill 代表一个专业领域的智能体。
+
+#### Skills 加载流程
 
 ```mermaid
 sequenceDiagram
     participant U as 用户
-    participant C as Claude
-    participant H as Hook系统
-    participant T as TODO管理器
-    participant G as Git
+    participant C as Claude Code
+    participant F as 文件系统
+    participant O as Ollama
 
-    U->>C: 执行 /multi-agent-workflow feature-name
-    C->>H: PreToolUse触发 (Task验证)
-    H->>T: 验证前置条件
-    T-->>H: ✅ 验证通过
-    
-    C->>C: 启动spec-orchestrator
-    C->>H: PostToolUse触发 (Task完成)
-    H->>T: 更新任务统计
-    
-    C->>H: SubagentStop触发
-    H->>T: 标记任务完成
-    H->>G: 自动Git提交
-    H->>C: 触发下一个代理
-    
-    C->>H: Stop触发
-    H->>T: 更新最终统计
-    H-->>U: 会话完成日志
+    U->>C: /backend-specialist 设计 API
+    C->>F: 读取 skills/backend-specialist/SKILL.md
+    F-->>C: 返回 Skill 定义
+    C->>C: 解析 YAML Frontmatter
+    C->>O: 结合 Skill 能力优化提示词
+    O-->>C: 返回优化后的系统提示
+    C->>C: 注入系统上下文
+    C-->>U: 以专家身份执行任务
 ```
 
-## 🎯 核心九大专家代理
+#### Skill 目录结构
 
-### 1. 📋 spec-orchestrator - 总协调器
-
-**职责**：多层智能代理协调系统的总指挥官
-
-- 读取Kiro规格文件进行深度分析
-- 智能选择最合适的专业代理团队
-- 协调三层架构的代理执行
-- 管理统一的TODO任务列表
-- 实现Hook驱动的自动化流程
-
-### 2. 📊 spec-analyst - 需求分析师
-
-**职责**：需求获取和项目范围专家
-
-- 获取全面的需求和用户故事
-- 创建带验收标准的结构化需求文档
-- 分析利益相关者和用户画像
-- 生成项目简报和范围文档
-
-### 3. 🏗️ spec-architect - 系统架构师
-
-**职责**：技术设计和架构专家
-
-- 创建全面的系统设计和架构
-- 技术栈推荐和评估
-- API规范和数据模型设计
-- 确保可扩展性、安全性和可维护性
-
-### 4. 📝 spec-planner - 实施规划师
-
-**职责**：将架构设计分解为可操作任务
-
-- 创建详细的任务列表和实现顺序
-- 估算复杂性和工作量
-- 定义实现顺序和依赖关系
-- 规划全面的测试策略
-
-### 5. 💻 spec-developer - 开发专家
-
-**职责**：根据规范实现代码
-
-- 编写干净、可维护的生产质量代码
-- 遵循架构模式和最佳实践
-- 创建单元测试和处理错误场景
-- 确保与现有代码的无缝集成
-
-### 6. 🔍 spec-reviewer - 代码审查师
-
-**职责**：代码质量和最佳实践保证
-
-- 评估代码可读性和可维护性
-- 识别安全漏洞和性能瓶颈
-- 检查代码异味和反模式
-- 提供可操作的改进反馈
-
-### 7. ✅ spec-validator - 质量验证师
-
-**职责**：最终质量验证和生产就绪评估
-
-- 验证所有需求是否满足
-- 确认架构实现的正确性
-- 计算整体质量分数
-- 生成全面的验证报告
-
-### 8. 🧪 spec-tester - 测试专家
-
-**职责**：综合测试策略和实现
-
-- 创建并执行全面的测试套件
-- 编写单元、集成和端到端测试
-- 执行安全测试和性能测试
-- 确保代码覆盖率符合标准
-
-### 9. 📋 spec-task-reviewer - 任务监督师
-
-**职责**：开发任务完成状态审查
-
-- 系统地审查任务列表中的每个任务
-- 验证实现是否符合规范要求
-- 自动触发未完成任务的执行
-- 提供全面的进度状态报告
-
-
-
-
-
-
-
-
-
-
-
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
-
-## 🙏 致谢
-
-- [Context Engineering Intro](https://github.com/coleam00/context-engineering-intro) -
-  核心理念来源
-- [Claude Code](https://claude.ai) - 强大的AI开发平台
-- 所有贡献者和社区成员
+```
+.claude/skills/
+├── backend-specialist/
+│   ├── SKILL.md                    # Skill 定义（必需）
+│   └── references/                 # 参考文档（可选）
+│       ├── cursor_rules_django.md
+│       ├── cursor_rules_fastapi.md
+│       └── restful_best_practices.md
+├── testing-specialist/
+│   ├── SKILL.md
+│   └── references/
+│       ├── pytest_guide.md
+│       └── test_patterns.md
+└── security-specialist/
+    ├── SKILL.md
+    └── references/
+        ├── owasp_top10.md
+        └── secure_coding.md
+```
 
 ---
 
-**让AI真正成为你的开发伙伴，而不仅仅是工具** 🚀
+#### SKILL.md 格式规范
+
+每个 Skill 必须包含 YAML Frontmatter 和 Markdown 内容：
+
+```markdown
+---
+name: backend-specialist
+description: 提供后端开发、API 设计、数据库交互能力
+version: 1.0.0
+author: Prorise
+---
+
+# Backend Specialist
+
+后端开发专家，擅长 API 设计和数据库优化。
+
+## When to Use This Skill
+
+- 设计 RESTful API
+- 实现业务逻辑
+- 优化数据库查询
+- 处理认证授权
+
+## Capabilities
+
+### Django Backend Expert
+Django 后端开发专家，精通 Models、Views、Services。
+
+📖 [Django 最佳实践](./references/cursor_rules_django.md)
+
+### FastAPI Expert
+FastAPI 高性能 API 开发专家。
+
+📖 [FastAPI 开发指南](./references/cursor_rules_fastapi.md)
+```
+
+---
+
+#### Skill 示例
+
+<details>
+<summary><b>示例 1：code-review（代码审查助手）</b></summary>
+
+```markdown
+---
+name: code-review
+description: 代码审查助手，检测代码质量和安全问题
+version: 1.0.0
+---
+
+# Code Review Skill
+
+自动化代码审查工具，帮助你在提交前发现问题。
+
+## When to Use This Skill
+
+- 提交 PR 前的自检
+- 重构代码时的风险评估
+- Code Review 流程自动化
+
+## Capabilities
+
+### 静态分析
+扫描代码中的常见问题：
+- 未处理的异常
+- 硬编码的配置
+- 性能瓶颈
+- 代码重复
+
+📖 [静态分析规则](./references/static-analysis.md)
+
+### 安全检查
+检测潜在的安全漏洞：
+- SQL 注入风险
+- XSS 漏洞
+- 敏感信息泄露
+- 不安全的依赖
+
+📖 [安全检查清单](./references/security-checklist.md)
+
+### 代码风格
+检查代码规范：
+- PEP 8 (Python)
+- ESLint (JavaScript)
+- Google Style Guide (Java)
+
+📖 [代码风格指南](./references/style-guide.md)
+```
+
+</details>
+
+<details>
+<summary><b>示例 2：test-generator（测试用例生成器）</b></summary>
+
+```markdown
+---
+name: test-generator
+description: 测试用例生成器，自动生成单元测试和集成测试
+version: 1.0.0
+author: Prorise
+---
+
+# Test Generator Skill
+
+根据代码自动生成单元测试，提高测试覆盖率。
+
+## When to Use This Skill
+
+- 新功能开发完成后
+- 重构代码需要补充测试
+- 提高测试覆盖率
+
+## Capabilities
+
+### 单元测试生成
+支持多种测试框架：
+- pytest (Python)
+- Jest (JavaScript)
+- JUnit (Java)
+
+自动生成：
+- 正常用例
+- 边界用例
+- 异常用例
+
+📖 [测试框架配置](./references/frameworks.md)
+
+### 边界用例分析
+自动识别边界条件：
+- 空值处理（None、null、undefined）
+- 异常输入（负数、超长字符串）
+- 并发场景（竞态条件、死锁）
+
+📖 [边界用例模板](./references/test-templates.md)
+
+### 覆盖率报告
+生成测试覆盖率分析：
+- 行覆盖率
+- 分支覆盖率
+- 函数覆盖率
+
+📖 [覆盖率报告格式](./references/coverage-report.md)
+```
+
+</details>
+
+<details>
+<summary><b>示例 3：api-designer（API 设计助手）</b></summary>
+
+```markdown
+---
+name: api-designer
+description: RESTful API 设计助手，符合行业最佳实践
+version: 2.0.0
+author: Prorise
+dependencies:
+  - openapi-generator
+  - swagger-ui
+---
+
+# API Designer Skill
+
+设计符合 RESTful 规范的 API，自动生成 OpenAPI 文档。
+
+## When to Use This Skill
+
+- 新项目 API 设计
+- 现有 API 重构
+- OpenAPI 文档生成
+- API 版本管理
+
+## Capabilities
+
+### 资源建模
+设计 RESTful 资源：
+- 资源命名规范（复数形式、小写、连字符）
+- HTTP 方法选择（GET/POST/PUT/PATCH/DELETE）
+- 状态码定义（2xx/4xx/5xx）
+- 请求/响应格式（JSON Schema）
+
+📖 [RESTful 最佳实践](./references/restful-guide.md)
+
+### 文档生成
+自动生成 API 文档：
+- OpenAPI 3.0 规范
+- Swagger UI 集成
+- 示例代码生成（curl、Python、JavaScript）
+- Postman Collection 导出
+
+📖 [OpenAPI 文档模板](./references/openapi-template.md)
+
+### 版本管理
+API 版本控制策略：
+- URL 版本控制（`/v1/users`）
+- Header 版本控制（`Accept: application/vnd.api+json; version=1`）
+- 兼容性检查（Breaking Changes 检测）
+- 废弃策略（Deprecation Notice）
+
+📖 [版本管理策略](./references/versioning.md)
+
+### 安全设计
+API 安全机制：
+- 认证方案（OAuth2/JWT/API Key）
+- 权限控制（RBAC/ABAC）
+- 限流策略（Rate Limiting）
+- CORS 配置
+
+📖 [API 安全配置](./references/security.md)
+```
+
+</details>
+
+<details>
+<summary><b>示例 4：database-optimizer（数据库优化助手）</b></summary>
+
+```markdown
+---
+name: database-optimizer
+description: 数据库性能优化助手，分析慢查询和索引设计
+version: 1.0.0
+author: Prorise
+---
+
+# Database Optimizer Skill
+
+分析和优化数据库性能，解决慢查询问题。
+
+## When to Use This Skill
+
+- 慢查询优化
+- 索引设计
+- 数据库架构评审
+- 性能瓶颈排查
+
+## Capabilities
+
+### 查询分析
+分析 SQL 性能：
+- 执行计划解读（EXPLAIN）
+- 索引使用情况
+- 查询重写建议
+- N+1 查询检测
+
+📖 [查询优化指南](./references/query-optimization.md)
+
+### 索引设计
+索引策略建议：
+- 单列索引 vs 复合索引
+- 覆盖索引（Covering Index）
+- 索引失效场景（函数、类型转换）
+- 索引维护成本
+
+📖 [索引设计最佳实践](./references/index-design.md)
+
+### 架构优化
+数据库架构改进：
+- 表结构设计（范式化 vs 反范式化）
+- 分库分表策略（垂直拆分、水平拆分）
+- 读写分离（主从复制）
+- 缓存策略（Redis、Memcached）
+
+📖 [数据库架构方案](./references/architecture.md)
+```
+
+</details>
+
+<details>
+<summary><b>示例 5：doc-writer（技术文档生成器）</b></summary>
+
+```markdown
+---
+name: doc-writer
+description: 技术文档生成器，自动生成项目文档
+version: 1.0.0
+author: Prorise
+---
+
+# Doc Writer Skill
+
+自动生成项目文档，保持文档与代码同步。
+
+## When to Use This Skill
+
+- 项目初始化
+- 功能开发完成
+- 文档更新
+- API 文档生成
+
+## Capabilities
+
+### README 生成
+生成项目 README：
+- 项目介绍
+- 快速开始
+- 安装指南
+- API 文档
+- 贡献指南
+
+📖 [README 模板](./references/readme-template.md)
+
+### 代码注释
+自动补充注释：
+- 函数说明（Docstring）
+- 参数描述（类型、默认值）
+- 返回值说明
+- 异常说明
+
+📖 [注释规范](./references/comment-style.md)
+
+### 变更日志
+生成 CHANGELOG：
+- 版本记录
+- 功能变更
+- Bug 修复
+- 破坏性更新
+
+📖 [变更日志格式](./references/changelog-format.md)
+```
+
+</details>
+
+---
+
+## 📁 项目结构
+
+```
+claude-code-multi-agent/
+├── .claude/
+│   ├── hooks/                      # Python Hooks 系统
+│   │   ├── core/                   # 核心模块
+│   │   │   ├── base_hook.py        # Hook 基类
+│   │   │   ├── ollama_client.py    # Ollama 客户端
+│   │   │   ├── document_manager.py # 文档管理器
+│   │   │   ├── config.py           # 配置管理
+│   │   │   └── logger.py           # 日志记录
+│   │   ├── handlers/               # Hook 处理器
+│   │   │   ├── session_start.py    # 会话启动
+│   │   │   ├── user_prompt_submit.py # 提示分析
+│   │   │   └── post_tool_use.py    # 工具使用后处理
+│   │   ├── session_start.py        # SessionStart 入口
+│   │   ├── user_prompt_submit.py   # UserPromptSubmit 入口
+│   │   └── post_tool_use.py        # PostToolUse 入口
+│   ├── commands/                   # Commands 定义
+│   │   ├── kiro/
+│   │   │   └── spec.md             # 功能规格创建工作流
+│   │   ├── agent-workflow/
+│   │   │   └── workflow.md         # 代理工作流
+│   │   └── gh/
+│   │       └── commit.md           # Git 提交工作流
+│   ├── skills/                     # Skills 定义
+│   │   ├── backend-specialist/
+│   │   ├── frontend-specialist/
+│   │   ├── testing-specialist/
+│   │   ├── security-specialist/
+│   │   └── ...
+│   └── settings.json               # Hooks 配置
+├── project_document/               # 自动维护的文档
+│   ├── DEVELOPMENT.md              # 开发工作文档
+│   ├── KNOWLEDGE.md                # 项目知识库
+│   ├── CHANGELOG.md                # 变更日志
+│   ├── tutorial-ollama-setup.md    # Ollama 配置教程
+│   └── tutorial-collaboration-paradigm.md # 协作范式教程
+├── .env.example                    # 环境变量示例
+├── pyproject.toml                  # uv 依赖配置
+└── README.md                       # 本文件
+```
+
+---
+
+## 📚 文档
+
+### 核心文档
+
+- **[Ollama 配置教程](./project_document/tutorial-ollama-setup.md)** - 详细的 Ollama 安装和模型配置指南
+- **[协作范式教程](./project_document/tutorial-collaboration-paradigm.md)** - 理解本项目的协作理念和工作流程
+- **[开发文档](./project_document/DEVELOPMENT.md)** - 当前开发进度和待办事项
+- **[项目知识库](./project_document/KNOWLEDGE.md)** - 项目的技术决策和最佳实践
+
+### 技术文档
+
+- **[Hook 开发指南](./.claude/hooks/core/base_hook.py)** - 如何开发自定义 Hook
+- **[Skill 开发指南](./.claude/skills/)** - 如何创建新的 Skill
+- **[Command 开发指南](./.claude/commands/)** - 如何定义工作流 Command
+
+---
+
+## 🔧 配置说明
+
+### 环境变量配置
+
+编辑 `.env` 文件：
+
+```bash
+# ===== Ollama 模型配置 =====
+OLLAMA_MODEL=gemma3:1b
+
+# 可选：使用更强大的模型
+# OLLAMA_MODEL=llama3.2:3b
+
+# ===== TTS(文本转语音)配置 =====
+# TTS 提供商: pyttsx3(本地，无需 API)、openai、elevenlabs
+HOOKS_TTS_PROVIDER=pyttsx3
+
+# 是否启用 TTS 语音播报: true 或 false
+HOOKS_TTS_ENABLED=false
+```
+
+### Hooks 配置
+
+编辑 `.claude/settings.json`：
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(uv:*)",
+      "Write",
+      "Edit",
+      "Bash(chmod:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "uv run .claude/hooks/session_start.py"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "uv run .claude/hooks/user_prompt_submit.py"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "uv run .claude/hooks/post_tool_use.py"
+      }
+    ]
+  }
+}
+```
+
+### 提示词配置（重要）
+
+**所有提示词模板已配置化**，存储在 `.claude/hooks/prompts.json`，你可以自由调整和优化：
+
+```json
+{
+  "session_start": {
+    "skills_hint_header": "可用 Skills（使用 /skill-name 调用）:",
+    "project_type_label": "\n项目类型: {type}",
+    ...
+  },
+  "user_prompt_submit": {
+    "sequential_thinking_guidance": "【重要】这是一个复杂任务...",
+    ...
+  },
+  "post_tool_use": {
+    "document_update_header": "【强制】必须更新以下文档...",
+    ...
+  },
+  "ollama": {
+    "analyze_intent": "分析这个用户输入，返回 JSON：...",
+    ...
+  }
+}
+```
+
+**配置优势：**
+- ✅ **可调优**：根据实际效果持续优化提示词
+- ✅ **可版本控制**：提示词变更纳入 Git 管理
+- ✅ **团队协作**：统一团队提示词规范
+- ✅ **支持变量**：使用 `{变量名}` 占位符动态替换
+
+**修改提示词后无需重启**，下次 Hook 执行时自动加载最新配置。
+
+---
+
+## 🤝 贡献
+
+欢迎贡献！我们期待你的 Pull Request。
+
+### 贡献方式
+
+1. **Fork 本仓库**
+2. **创建特性分支**
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. **提交更改**
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. **推送到分支**
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. **开启 Pull Request**
+
+### 贡献指南
+
+- **Bug 报告**：使用 [Issue 模板](https://github.com/Prorise-cool/claude-code-multi-agent/issues/new) 提交
+- **功能建议**：在 [Discussions](https://github.com/Prorise-cool/claude-code-multi-agent/discussions) 中讨论
+- **代码贡献**：遵循项目的代码风格和提交规范
+- **文档改进**：修正错误或补充说明
+
+### 开发环境设置
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/Prorise-cool/claude-code-multi-agent.git
+cd claude-code-multi-agent
+
+# 2. 安装依赖
+uv sync
+
+# 3. 运行测试
+uv run pytest
+
+# 4. 启动开发模式
+uv run python -m claude_hooks.dev
+```
+
+---
+
+## 🐛 常见问题
+
+### Q1: Ollama 连接失败怎么办？
+
+**问题**：Hook 执行时提示 `Connection refused` 或 `Ollama not running`
+
+**解决方案**：
+
+```bash
+# 1. 检查 Ollama 是否运行
+ollama list
+
+# 2. 如果未运行，启动 Ollama 服务
+# Windows: 从开始菜单启动 Ollama
+# macOS/Linux:
+ollama serve
+
+# 3. 验证模型是否下载
+ollama pull gemma3:1b
+```
+
+### Q2: uv 命令找不到？
+
+**问题**：执行 `uv run` 时提示 `command not found`
+
+**解决方案**：
+
+```bash
+# 1. 重新安装 uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 2. 添加到 PATH（如果安装后仍找不到）
+# 在 ~/.bashrc 或 ~/.zshrc 中添加：
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# 3. 重新加载配置
+source ~/.bashrc  # 或 source ~/.zshrc
+```
+
+### Q3: Hook 执行失败，如何调试？
+
+**问题**：Hook 执行时没有输出或报错
+
+**解决方案**：
+
+```bash
+# 1. 手动执行 Hook 查看详细错误
+uv run .claude/hooks/session_start.py
+
+# 2. 查看日志文件
+cat .claude/logs/hooks.log
+
+# 3. 启用调试模式（编辑 .env）
+DEBUG=true
+```
+
+### Q4: Skills 无法加载？
+
+**问题**：输入 `/skill-name` 后提示 Skill 不存在
+
+**解决方案**：
+
+```bash
+# 1. 检查 Skill 目录结构
+ls -la .claude/skills/skill-name/
+
+# 2. 确保 SKILL.md 存在且格式正确
+cat .claude/skills/skill-name/SKILL.md
+
+# 3. 重启会话，触发 SessionStart Hook 重新扫描
+```
+
+### Q5: 如何切换 Ollama 模型？
+
+**问题**：想使用更强大的模型
+
+**解决方案**：
+
+```bash
+# 1. 下载新模型
+ollama pull llama3.2:3b
+
+# 2. 修改 .env 文件
+OLLAMA_MODEL=llama3.2:3b
+
+# 3. 重启 Claude Code 会话
+```
+
+---
+
+## 📊 性能优化建议
+
+### Ollama 模型选择
+
+| 模型 | 大小 | 速度 | 准确率 | 推荐场景 |
+|------|------|------|--------|---------|
+| `gemma3:1b` | 1.2GB | ⚡⚡⚡ | ⭐⭐⭐ | 日常开发、快速响应 |
+| `llama3.2:3b` | 3.2GB | ⚡⚡ | ⭐⭐⭐⭐ | 复杂任务、高准确率 |
+| `qwen2.5:7b` | 7.6GB | ⚡ | ⭐⭐⭐⭐⭐ | 生产环境、关键决策 |
+
+### Hook 性能优化
+
+```python
+# 在 .claude/hooks/core/config.py 中配置
+
+# 1. 启用缓存（避免重复调用 Ollama）
+ENABLE_CACHE = True
+CACHE_TTL = 3600  # 缓存 1 小时
+
+# 2. 异步执行（不阻塞主流程）
+ASYNC_HOOKS = ["PostToolUse", "Notification"]
+
+# 3. 超时设置（避免长时间等待）
+OLLAMA_TIMEOUT = 30  # 30 秒超时
+```
+
+---
+
+## 🔒 安全说明
+
+### 敏感信息保护
+
+本项目不会收集或上传任何敏感信息：
+
+- ✅ **本地运行**：所有 Hook 和 Ollama 调用均在本地执行
+- ✅ **无网络请求**：除了 Ollama API（本地），不发送任何外部请求
+- ✅ **代码隔离**：通过 uv 虚拟环境隔离依赖
+
+### 权限说明
+
+`.claude/settings.json` 中的权限配置：
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",      // 创建目录（用于初始化文档）
+      "Bash(uv:*)",         // 执行 uv 命令（运行 Hooks）
+      "Write",              // 写入文件（生成文档）
+      "Edit",               // 编辑文件（更新代码）
+      "Bash(chmod:*)"       // 修改权限（设置脚本可执行）
+    ]
+  }
+}
+```
+
+**为什么需要这些权限？**
+
+- `Bash(mkdir:*)` - 创建 `project_document/` 目录
+- `Bash(uv:*)` - 运行 Python Hooks
+- `Write/Edit` - 自动更新文档和代码
+- `Bash(chmod:*)` - 确保 Hook 脚本可执行
+
+---
+
+## 🌟 致谢
+
+本项目的灵感和技术来源于以下优秀项目：
+
+- **[Ollama](https://ollama.com/)** - 本地 LLM 运行时，提供智能引擎支持
+- **[Claude Code](https://www.anthropic.com/)** - AI 编程助手，提供 Hooks 系统
+- **[uv](https://github.com/astral-sh/uv)** - 超快的 Python 包管理器
+- **[RIPER-5 协议](./project_document/tutorial-collaboration-paradigm.md)** - 多代理协作范式
+
+### 贡献者
+
+感谢所有为本项目做出贡献的开发者：
+
+<a href="https://github.com/Prorise-cool/claude-code-multi-agent/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Prorise-cool/claude-code-multi-agent" />
+</a>
+
+---
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+```
+MIT License
+
+Copyright (c) 2025 Prorise
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 🚀 路线图
+
+### v1.0.0（当前版本）
+
+- ✅ 基础 Hooks 系统
+- ✅ Ollama 集成
+- ✅ Skills 自动发现
+- ✅ Commands 工作流
+- ✅ 自动文档维护
+
+### v1.1.0（计划中）
+
+- ⏳ 多语言支持（英文、中文）
+
+---
+
+## 📞 联系方式
+
+- **作者**：[@Prorise-cool](https://github.com/Prorise-cool)
+- **项目主页**：[GitHub](https://github.com/Prorise-cool/claude-code-multi-agent)
+- **问题反馈**：[Issues](https://github.com/Prorise-cool/claude-code-multi-agent/issues)
+- **讨论区**：[Discussions](https://github.com/Prorise-cool/claude-code-multi-agent/discussions)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [@Prorise-cool](https://github.com/Prorise-cool)**
+
+如果这个项目对你有帮助，请给个 ⭐ Star 支持一下！
+
+[⬆ 回到顶部](#-claude-code-multi-agent)

@@ -1,0 +1,110 @@
+name: Bug 报告
+description: 报告 Bug 或意外行为
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写此 Bug 报告！
+        请尽可能提供详细信息，以帮助我们重现和修复问题。
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 先决条件
+      description: 请在提交前确认以下内容
+      options:
+        - label: 我已搜索现有问题以确保此 Bug 未被报告
+          required: true
+        - label: 我已阅读文档
+          required: true
+        - label: 我正在使用最新版本
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug 描述
+      description: 清晰简洁地描述 Bug 是什么
+      placeholder: 描述 Bug...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 重现步骤
+      description: 重现行为的步骤
+      placeholder: |
+        1. 运行命令 '...'
+        2. 配置 '...'
+        3. 看到错误
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+      description: 您预期会发生什么
+      placeholder: 描述您预期的结果...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      description: 实际发生了什么
+      placeholder: 描述实际发生的情况...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: 组件
+      description: 哪个组件受到影响？
+      options:
+        - Hooks 系统
+        - 技能
+        - 命令
+        - Ollama 集成
+        - 文档管理器
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      description: 请提供您的环境详细信息
+      placeholder: |
+        - 操作系统: [例如，Windows 11, macOS 14, Ubuntu 22.04]
+        - Python 版本: [例如，3.11]
+        - Ollama 版本: [例如，0.1.x]
+        - Ollama 模型: [例如，gemma3:1b]
+        - Claude Code 版本: [如适用]
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志
+      description: 请复制并粘贴任何相关的日志输出
+      render: shell
+      placeholder: |
+        在此粘贴日志...
+        检查 .claude/logs/hooks.log 以获取与 Hook 相关的问题
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 附加上下文
+      description: 添加有关问题的任何其他上下文、截图或文件
+      placeholder: 任何其他信息...

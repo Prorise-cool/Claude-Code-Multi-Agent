@@ -1,0 +1,122 @@
+# 仓库标签配置
+# 使用方式: gh label import labels.yml
+
+labels:
+  # 类型标签
+  - name: bug
+    color: "d73a4a"
+    description: "某些功能无法正常工作"
+
+  - name: enhancement
+    color: "a2eeef"
+    description: "新功能或请求"
+
+  - name: documentation
+    color: "0075ca"
+    description: "文档的改进或补充"
+
+  - name: question
+    color: "d876e3"
+    description: "需要更多信息"
+
+  - name: skill-request
+    color: "7057ff"
+    description: "请求新技能"
+
+  # 状态标签
+  - name: triage
+    color: "fbca04"
+    description: "需要分类"
+
+  - name: in-progress
+    color: "0e8a16"
+    description: "正在进行中"
+
+  - name: awaiting-review
+    color: "006b75"
+    description: "等待审查"
+
+  - name: stale
+    color: "ffffff"
+    description: "最近没有活动"
+
+  - name: wontfix
+    color: "ffffff"
+    description: "不会修复"
+
+  - name: duplicate
+    color: "cfd3d7"
+    description: "此问题或拉取请求已存在"
+
+  - name: invalid
+    color: "e4e669"
+    description: "这似乎不对"
+
+  # 优先级标签
+  - name: "priority: critical"
+    color: "b60205"
+    description: "关键优先级"
+
+  - name: "priority: high"
+    color: "d93f0b"
+    description: "高优先级"
+
+  - name: "priority: medium"
+    color: "fbca04"
+    description: "中等优先级"
+
+  - name: "priority: low"
+    color: "0e8a16"
+    description: "低优先级"
+
+  # 组件标签
+  - name: hooks
+    color: "1d76db"
+    description: "与 Hooks 系统相关"
+
+  - name: skills
+    color: "5319e7"
+    description: "与技能相关"
+
+  - name: commands
+    color: "006b75"
+    description: "与命令相关"
+
+  - name: ollama
+    color: "bfd4f2"
+    description: "与 Ollama 集成相关"
+
+  # 贡献标签
+  - name: "good first issue"
+    color: "7057ff"
+    description: "适合新手"
+
+  - name: "help wanted"
+    color: "008672"
+    description: "需要额外关注"
+
+  # 自动化标签
+  - name: dependencies
+    color: "0366d6"
+    description: "更新依赖文件的拉取请求"
+
+  - name: ci/cd
+    color: "000000"
+    description: "与 CI/CD 工作流相关"
+
+  - name: automated
+    color: "ededed"
+    description: "由 GitHub Actions 自动创建"
+
+  - name: upstream-sync
+    color: "c5def5"
+    description: "与上游仓库同步"
+
+  # 安全标签
+  - name: security
+    color: "d73a4a"
+    description: "安全相关问题"
+
+  - name: pinned
+    color: "006b75"
+    description: "置顶问题 - 不会自动关闭"
