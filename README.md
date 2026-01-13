@@ -1,15 +1,16 @@
 # 🤖 Claude Code Multi-Agent
 
 <div align="center">
-
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
+[![GitHub stars](https://img.shields.io/github/stars/Prorise-cool/Claude-Code-Multi-Agent)](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
 ![Ollama](https://img.shields.io/badge/Ollama-gemma3:1b-green.svg)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 **让 Claude Code 拥有项目感知能力的智能开发框架**
 
 [快速开始](#-5分钟快速开始) · [文档](./project_document) · [示例](#-使用示例) · [贡献指南](#🤝-贡献)
+
+仓库地址：[Branches · Prorise-cool/Claude-Code-Multi-Agent](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
 
 </div>
 
@@ -452,11 +453,6 @@ changelog_content = read_file("project_document/CHANGELOG.md")
 git_status = check_git_config()
 # 检查：.gitignore, 分支策略
 ```
-
-**为什么移除 Memory MCP？**
-- Memory MCP 需要显式调用，但大模型在上下文爆炸时会忽略指令
-- 文档直接注入上下文，确保信息始终可用
-- 文档可版本控制，便于团队协作和知识沉淀
 
 **2. UserPromptSubmit - 意图识别处理器**
 
