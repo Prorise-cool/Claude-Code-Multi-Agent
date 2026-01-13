@@ -1,18 +1,20 @@
 # 🤖 Claude Code Multi-Agent
 
 <div align="center">
+
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![GitHub stars](https://img.shields.io/github/stars/Prorise-cool/Claude-Code-Multi-Agent)](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
+[![GitHub stars](https://img.shields.io/github/stars/Prorise-cool/Claude-Code-Multi-Agent)](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
 ![Ollama](https://img.shields.io/badge/Ollama-gemma3:1b-green.svg)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
+<br/>
 
 **让 Claude Code 拥有项目感知能力的智能开发框架**
 
 [快速开始](#-5分钟快速开始) · [文档](./project_document) · [示例](#-使用示例) · [贡献指南](#🤝-贡献)
 
-仓库地址：[Branches · Prorise-cool/Claude-Code-Multi-Agent](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
-
 </div>
+
 
 ---
 
