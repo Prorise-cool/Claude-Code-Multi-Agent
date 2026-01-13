@@ -2,7 +2,7 @@
 
 <div align="center">
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-[![GitHub stars](https://img.shields.io/github/stars/Prorise-cool/Claude-Code-Multi-Agent)](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
+![GitHub stars](https://img.shields.io/github/stars/Prorise-cool/Claude-Code-Multi-Agent)](https://github.com/Prorise-cool/Claude-Code-Multi-Agent)
 ![Ollama](https://img.shields.io/badge/Ollama-gemma3:1b-green.svg)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
