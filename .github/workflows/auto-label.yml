@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: 标记 Bug 报告
         if: contains(github.event.issue.title, '[Bug]')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -31,7 +31,7 @@ jobs:
 
       - name: 标记功能请求
         if: contains(github.event.issue.title, '[Feature]')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -43,7 +43,7 @@ jobs:
 
       - name: 标记技能请求
         if: contains(github.event.issue.title, '[Skill]')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -55,7 +55,7 @@ jobs:
 
       - name: 标记问题
         if: contains(github.event.issue.title, '[Question]')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -81,7 +81,7 @@ jobs:
 
       - name: 标记文档更改
         if: contains(steps.changed-files.outputs.all_changed_files, '.md') || contains(steps.changed-files.outputs.all_changed_files, 'docs/')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -93,7 +93,7 @@ jobs:
 
       - name: 标记 Hook 更改
         if: contains(steps.changed-files.outputs.all_changed_files, '.claude/hooks/')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -105,7 +105,7 @@ jobs:
 
       - name: 标记技能更改
         if: contains(steps.changed-files.outputs.all_changed_files, '.claude/skills/')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -117,7 +117,7 @@ jobs:
 
       - name: 标记命令更改
         if: contains(steps.changed-files.outputs.all_changed_files, '.claude/commands/')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
@@ -129,7 +129,7 @@ jobs:
 
       - name: 标记 CI/CD 更改
         if: contains(steps.changed-files.outputs.all_changed_files, '.github/workflows/')
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.issues.addLabels({
