@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 标记过期问题和 PR
-        uses: actions/stale@v9
+        uses: actions/stale@v10
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
