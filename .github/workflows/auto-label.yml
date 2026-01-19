@@ -77,7 +77,7 @@ jobs:
 
       - name: 获取更改的文件
         id: changed-files
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v47
 
       - name: 标记文档更改
         if: contains(steps.changed-files.outputs.all_changed_files, '.md') || contains(steps.changed-files.outputs.all_changed_files, 'docs/')
